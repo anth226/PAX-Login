@@ -1,0 +1,69 @@
+{
+    "auth": {
+        "index": {
+            "header": "Sign in",
+            "title": "Use your PAX Training Account",
+            "footerText": "Not your computer? Use Guest mode to sign in privately.",
+            "footerLink": "Learn more",
+            "buttonTitle": "Next",
+            "input": {
+                "label":"Email or phone",
+                "errors": {
+                    "invalid": "Invalid email address",
+                    "required": "Email is required."
+                }
+            }
+        },
+        "password": {
+            "header": "Hi User",
+            "title": "To continue, first verify it's you",
+            "input": {
+                "label": "Enter your password",
+                "errors":{
+                    "required": "Password is required.",
+                    "length": "Password must be at least 8 characters long"
+                }
+            },
+            "show": "Show Password",
+            "forgot": "Forgot Password?",
+            "buttonTitle": "Sign In",
+            "success": "Login Success!"
+        },
+        "recovery": {
+            "header": "Account recovery",
+            "title": "To help keep your account safe, PAX wants to make sure it's really you trying to sign in",
+            "choose": "Choose how you want to sigin in:",
+            "phone": "on your phone or tablets",
+            "verify_code": "Get a verify code at {{phone}}",
+            "rates": "Standard rates apply",
+            "another": "Try another way to signin"
+        },
+        "two-step":{
+            "header": "2-Step Verification",
+            "title": "This extra steps shows it's really you trying to sign in",
+            "text": "A text message with 6-digit verification code was just sent to {{phone}}",
+            "input": {
+                "label": "Enter the code",
+                "errors":{
+                    "required":"Code is required."
+                }
+            },
+            "ask_again": "Don't ask again on this computer",
+            "buttonTitle": "Submit"
+        },
+        "forgot": {
+            "header": "Find your email",
+            "title": "Enter your phone number or recovery email",
+            "input":{
+                "label": "Phone number or email",
+                "errors":{
+                    "required": "Email is required."
+                }
+            },
+            "buttonTitle": "Next",
+            "success": "Password Reset Link Sent to your mail."
+        }
+    },
+    "yes": "Yes",
+    "tap": "Tap"
+}
