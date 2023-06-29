@@ -46,6 +46,7 @@ function PasswordInput({ register, errors, isLoading}:TAuthProps) {
                 <KeyboardArrowDownRoundedIcon className="h-4 w-4" />
             </div>
           </div>
+          
           <div className=" text-[#202124] mt-6 text-sm" >
             {t('auth.password.title')}
           </div>
@@ -54,7 +55,7 @@ function PasswordInput({ register, errors, isLoading}:TAuthProps) {
               <TextField
                 type={showPassword ? "text" : "password"}
                 label={t('auth.password.input.label')}
-                className="w-full mb-2"
+                className="w-full"
                 error={errors.password}
                 helperText={errors.password ? errors.password?.message : false}
                 {...register("password", {
@@ -72,7 +73,8 @@ function PasswordInput({ register, errors, isLoading}:TAuthProps) {
                 control={<Checkbox />}
                 label={t('auth.password.show')}
                 onChange={handleClickShowPassword}
-                className="text-sm ml-0"
+                className="text-sm"
+                style={{marginLeft:0,marginTop:"0.5rem"}}
               />
           </div>
             <div className="flex justify-between items-center">

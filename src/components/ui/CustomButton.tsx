@@ -4,7 +4,7 @@ import React from 'react'
 function CustomButton({title="Submit", color="primary", isLoading=false, type="submit"}) {
   return (
     !isLoading ? (
-      <Button variant="contained" type={type} color={color}>
+      <Button href='' variant="contained" type={type} color='primary'>
           {title}
       </Button>
     ):(

@@ -10,7 +10,7 @@ type FormData = {
   email: string,
 };
 
-function forgot() {
+function Forgot() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const {t} = useTranslation("common")
@@ -33,4 +33,4 @@ function forgot() {
   )
 }
 
-export default forgot
+export default Forgot

@@ -15,7 +15,7 @@ type FormData = {
   code?: string,
 };
 
-function password() {
+function Password() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormData>();
     const router = useRouter()
@@ -76,4 +76,4 @@ function password() {
   )
 }
 
-export default password
+export default Password

@@ -72,7 +72,7 @@ function TwoStepVerify({errors, register, isLoading}:TAuthProps) {
             <FormControlLabel
               control={<Checkbox defaultChecked />}
               label={t('auth.two-step.ask_again')}
-              className='ml-0 mt-2'
+              style={{marginLeft:0,marginTop:"0.5rem"}}
             />
           </div>
 

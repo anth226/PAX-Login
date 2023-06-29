@@ -4,9 +4,9 @@ import Image from 'next/image';
 import { Button, Card, FormControlLabel, TextField ,Checkbox} from "@mui/material";
 import LogoImg from '../../images/logo.svg'
 import { useForm } from 'react-hook-form';
-import { getResetLink, setUpdatePassword } from '../../api/auth';
 import { apiErrorToast } from '../../shared/toastifier/toastify';
 import CustomButton from '../../components/ui/CustomButton';
+import { getResetLinkApi, setUpdatePasswordApi } from '../../api/auth';
 
 
 type FormData = {
@@ -25,7 +25,7 @@ function ResetPassword() {
     const handleClickShowPassword = () => setShowPassword(!showPassword);
 
     const onSubmit = async (data:FormData) => {
-        setUpdatePassword(data)
+        setUpdatePasswordApi(data)
      }
 
     useEffect(()=>{
@@ -35,7 +35,7 @@ function ResetPassword() {
     const checkResetLink = async () => {
       setIsLoading(true)
       try {
-        await getResetLink(code,setIsUpdatePassword,isUpdatePassword)
+        await getResetLinkApi(code,setIsUpdatePassword,isUpdatePassword)
       } catch (error) {
         apiErrorToast(error)
       }
