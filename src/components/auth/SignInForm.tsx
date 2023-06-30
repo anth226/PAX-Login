@@ -5,6 +5,7 @@ import Image from 'next/image';
 import CustomButton from '../ui/CustomButton';
 import { TAuthProps } from '../../shared/types/auth';
 import useTranslation from 'next-translate/useTranslation'
+import Link from 'next/link';
 
 
 function SignInForm({ register, errors, isLoading}:TAuthProps) {
@@ -49,7 +50,13 @@ function SignInForm({ register, errors, isLoading}:TAuthProps) {
               {t('auth.index.footerLink')}
             </span>
           </div>
-          <div className="flex justify-end items-center">
+          <div className="flex justify-between items-center">
+            <Link
+                className="text-[#1a73e8] font-medium cursor-pointer text-sm"
+                href={"/signin/forgot"}
+              >
+                {t('auth.index.forgot')}
+              </Link>
             {/* <Button variant="text">Create account</Button> */}
             <CustomButton title={t('auth.index.buttonTitle')} isLoading={isLoading}/>
           </div>

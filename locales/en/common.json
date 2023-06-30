@@ -6,8 +6,9 @@
             "footerText": "Not your computer? Use Guest mode to sign in privately.",
             "footerLink": "Learn more",
             "buttonTitle": "Next",
+            "forgot": "Reset Password?",
             "input": {
-                "label":"Email or phone",
+                "label":"Email Address",
                 "errors": {
                     "invalid": "Invalid email address",
                     "required": "Email is required."
@@ -55,13 +56,18 @@
             "header": "Find your email",
             "title": "Enter your phone number or recovery email",
             "input":{
-                "label": "Phone number or email",
+                "label": "Email Address",
                 "errors":{
                     "required": "Email is required."
                 }
             },
             "buttonTitle": "Next",
-            "success": "Password Reset Link Sent to your mail."
+            "success": "Password reset link sent to your mail.",
+            "message": "Password reset link sent to your mail. Please check your mailbox."
+        },
+        "resetpwd": {
+            "reset": "Reset Password",
+            "success": "Password Updated Success!"
         }
     },
     "yes": "Yes",

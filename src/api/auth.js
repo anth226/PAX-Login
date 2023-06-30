@@ -34,15 +34,11 @@ export const resetPasswordApi = async (data) => {
 };
 
 export const getResetLinkApi = async (
-  code,
-  setIsUpdatePassword,
-  isUpdatePassword
+  data,
 ) => {
-  setIsUpdatePassword(true);
   try {
-    return await axiosInstance.post("/auth/change-reset-link", code);
+    return await axiosInstance.post("/auth/check-reset-link", data);
   } catch (error) {
-    setIsUpdatePassword(false);
     throw error
   }
 };
