@@ -65,7 +65,7 @@ function PasswordInput({ register, errors, isLoading}:TAuthProps) {
                   },
                   minLength: {
                     value: 6,
-                    message: t('auth.password.input.errors.length')
+                    message: t('auth.password.input.errors.length', {length:6})
                   }
                 })}
               />

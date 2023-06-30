@@ -3,11 +3,7 @@ import axiosInstance from "../shared/utils/AxiosInstance";
 
 export const signInApi = async (data) => {
   try {
-    const response = await axiosInstance.post("/auth/login", data);
-    return {
-      status: true,
-      data: response.data,
-    };
+    return await axiosInstance.post("/auth/login", data);
   } catch (error) {
     throw error
   }
@@ -15,13 +11,7 @@ export const signInApi = async (data) => {
 
 export const verifyEmailApi = async (data) => {
   try {
-        console.log(process.env.API_URL)
-
-    const response = await axiosInstance.post("/auth/check/email", data);
-    return {
-      status: true,
-      data: response.data,
-    };
+    return await axiosInstance.post("/auth/check/email", data);
   } catch (error) {
     throw error
   }
@@ -29,7 +19,7 @@ export const verifyEmailApi = async (data) => {
 
 export const verifyTwoStepApi = async (data) => {
   try {
-    const response = await axiosInstance.post("/auth/verify/mail", data);
+    return await axiosInstance.post("/auth/verify/mail", data);
   } catch (error) {
     throw error
   }
@@ -37,7 +27,7 @@ export const verifyTwoStepApi = async (data) => {
 
 export const resetPasswordApi = async (data) => {
   try {
-    const response = await axiosInstance.post("/auth/reset-password", data);
+    return await axiosInstance.post("/auth/reset-password", data);
   } catch (error) {
     throw error
   }
@@ -50,11 +40,7 @@ export const getResetLinkApi = async (
 ) => {
   setIsUpdatePassword(true);
   try {
-    const response = await axiosInstance.post("/auth/change-reset-link", code);
-    return {
-      status: "success",
-      res: response,
-    };
+    return await axiosInstance.post("/auth/change-reset-link", code);
   } catch (error) {
     setIsUpdatePassword(false);
     throw error
@@ -63,7 +49,23 @@ export const getResetLinkApi = async (
 
 export const setUpdatePasswordApi = async (data) => {
   try {
-    const response = await axiosInstance.put("/auth/password", data);
+    return await axiosInstance.put("/auth/password", data);
+  } catch (error) {
+    throw error
+  }
+};
+
+export const sendOTPCodePhoneApi = async (data) => {
+  try {
+    return await axiosInstance.post("/auth/send/otp/phone", data);
+  } catch (error) {
+    throw error
+  }
+};
+
+export const sendOTPCodeMailApi = async (data) => {
+  try {
+    return await axiosInstance.post("/auth/send/otp/mail", data);
   } catch (error) {
     throw error
   }

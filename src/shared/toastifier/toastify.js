@@ -28,8 +28,10 @@ export const errorToast = (message) => {
 };
 
 export const apiErrorToast = (error) => {
-  console.log(error)
-  const errorMessage = error?.response?.data?.message ?? error.message
+  let errorMessage = error?.response?.data?.message ?? error.message
+  if(error?.response?.data?.message && Array.isArray(error?.response?.data?.message)) {
+    errorMessage = error?.response?.data?.message[0]
+  }
   toast.error(errorMessage, {
     position: "bottom-right",
     autoClose: 3000,

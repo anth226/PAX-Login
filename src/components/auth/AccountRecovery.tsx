@@ -1,4 +1,4 @@
-import React, { useTransition } from 'react'
+import React, { useRef, useTransition } from 'react'
 import{ Box,
     Button,
     Card,
@@ -9,7 +9,7 @@ import{ Box,
     TextField,
     Avatar
   } from "@mui/material";
-import {AccountCircle} from "@material-ui/icons"
+import {AccountCircle, MailRounded} from "@material-ui/icons"
 
 import LogoImg from '../../images/logo.svg'
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
@@ -28,9 +28,10 @@ import useTranslation from 'next-translate/useTranslation'
 
 
 
-function AccountRecovery({ isLoading, setPage }:TAuthProps) {
+function AccountRecovery({ isLoading, setValue }:TAuthProps) {
   const [email, setEmail] = useLocalStorage("email", "")
   const {t} = useTranslation("common")
+  const buttonRef = useRef<any>(null)
 
   return (
     <div className="flex justify-center items-center p-8 px-0">
@@ -60,15 +61,24 @@ function AccountRecovery({ isLoading, setPage }:TAuthProps) {
         </div>
 
         <List  component="nav" aria-label="mailbox folders"  >
-          <ListItem button className='px-8 p-4' disabled>
+          <ListItem disabled={isLoading} button className='px-8 p-4' onClick={()=>{
+            setValue("recoveryType", "mail")
+            buttonRef.current?.click()
+          }}>
             <div className='flex items-center gap-4  cursor-pointer'>    
-              <LockIcon color='primary'/>  
-              <div className='text-sm text-[#202124]'>{t('tap')} <span className='font-medium inline'>{t('yes')}</span> {t('auth.recovery.phone')}</div>
+              <MailRounded color='primary'/>  
+              <div className='text-sm text-[#202124]'>
+                {/* {t('tap')} <span className='font-medium inline'>{t('yes')}</span> {t('auth.recovery.phone')} */}
+                {t('auth.recovery.verify_code', {phone: email})}
+                </div>
               </div>
           </ListItem>
           <Divider variant="middle" className='mx-8' />
 
-          <ListItem button className='px-8 p-4' onClick={()=>setPage("2-step")}>
+          <ListItem disabled={isLoading} button className='px-8 p-4' onClick={()=>{
+            setValue("recoveryType", "phone")
+            buttonRef.current?.click()
+          }}>
             <div className='flex items-center gap-4  cursor-pointer'>    
               <ChatIcon color='primary'/>  
               <div className='flex flex-col gap-1'>
@@ -89,6 +99,7 @@ function AccountRecovery({ isLoading, setPage }:TAuthProps) {
           
         </List>
       </Card>
+      <button className='hidden' type='submit' ref={buttonRef}>Submit</button>
       </Container>
     </div>
   )

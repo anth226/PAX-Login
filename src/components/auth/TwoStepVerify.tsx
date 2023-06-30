@@ -21,8 +21,10 @@ import useTranslation from 'next-translate/useTranslation'
 
 
 
-function TwoStepVerify({errors, register, isLoading}:TAuthProps) {
+function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
   const [email, setEmail] = useLocalStorage("email", "")
+  const recoveryType: string = getValues('recoveryType')
+  const phone: string = getValues('phone')
   const {t} = useTranslation("common")
 
   return (
@@ -48,7 +50,7 @@ function TwoStepVerify({errors, register, isLoading}:TAuthProps) {
         </div>
         <div className='mt-8'>
           <div className=" text-[#202124] mt-2 text-sm">
-            {t('auth.two-step.text', {phone: "(***)*****42"})}
+            {t('auth.two-step.text', {phone: recoveryType=="mail" ? email : phone})}
           </div>
         </div>
         
