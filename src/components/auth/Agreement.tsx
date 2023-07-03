@@ -46,7 +46,7 @@ function Agreement({ register, errors, isLoading, getValues}:TAuthProps) {
           
           <div className=" text-[#202124] mt-6 text-sm" >
             In order to continue with login process you must acknowledge that you have read and agree to both the PXM Training Terms of Service and Privacy Policy.Using any PXM Training services signifies your acceptance of all related service-specific terms.<br/><br/>
-            Once done, check the box bellow" which serves as your confirmation to agreement on these documents. Once the box is checked,you may click the button below to proceed.
+            Once done, check the box bellow which serves as your confirmation to agreement on these documents. Once the box is checked, you may click the button below to proceed.
           </div>
           <FormGroup className="my-4">
             <FormControlLabel control={

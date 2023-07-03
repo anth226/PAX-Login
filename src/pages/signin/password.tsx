@@ -62,14 +62,12 @@ function Password() {
             if(response.data?.user?.isTwoFactorAuthenticationEnabled) {
                 setValue("phone", response.data.user.phone)
                 setPage("recovery")
-            } else {
-                if(response.data?.user?.requirePassReset) {
+            } else if(response.data?.user?.requirePassReset) {
                     setPage("password-reset")
-                } else if(!response.data?.user?.hasAcceptedLatestTOS) {
+            } else if(!response.data?.user?.hasAcceptedLatestTOS) {
                     setPage("agreement")
-                } else {
+            } else {
                     successFullLogin(response)
-                }
             }
         } catch (error) {
             customShowInputError('password', error, setError)
@@ -126,7 +124,11 @@ function Password() {
     const handleResetPassword = async (data:FormData) => {
         try {
             const response = await setUpdatePasswordAuthApi(data)
-            successFullLogin(response)
+            if(!response.data?.user?.hasAcceptedLatestTOS) {
+                setPage("agreement")
+            } else {
+                successFullLogin(response)
+            }
         } catch (error) {
             apiErrorToast(error)
         }

@@ -14,7 +14,6 @@ function CustomButton({title="Submit", color="primary", isLoading=false, type="s
       className='py-2'  
       color='primary'
       type='button'
-             
       >
        {title}
       </Button>

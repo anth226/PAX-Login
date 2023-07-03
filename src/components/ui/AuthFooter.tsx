@@ -27,7 +27,7 @@ function AuthFooter() {
           >
             {languages?.map(lan=>{
               return(
-                <MenuItem value={lan.value}>{lan.name}</MenuItem>
+                <MenuItem key={lan.value} value={lan.value}>{lan.name}</MenuItem>
               )
             })}
           </Select>
