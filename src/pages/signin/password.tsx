@@ -27,7 +27,7 @@ function Password() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const { register, handleSubmit, setValue, getValues, watch, setError, formState: { errors } } = useForm<FormData>();
     const router = useRouter()
-    const [page, setPage] = useState('recovery')
+    const [page, setPage] = useState('password')
     const {t} = useTranslation('common')
 
     useEffect(()=>{
