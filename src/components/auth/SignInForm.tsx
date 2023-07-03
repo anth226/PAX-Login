@@ -8,6 +8,7 @@ import useTranslation from 'next-translate/useTranslation'
 import LinearProgress from '@mui/material/LinearProgress';
 import Link from 'next/link';
 import { Box } from '@material-ui/core';
+import AuthFooter from '../ui/AuthFooter';
 
 
 function SignInForm({ register, errors, isLoading}:TAuthProps) {
@@ -24,13 +25,9 @@ function SignInForm({ register, errors, isLoading}:TAuthProps) {
       
       <Card variant="outlined" style={{ filter: isLoading ? 'opacity(70%)' : 'blur(0)' }} >
         {isLoading&& (
-           
            <Box sx={{ width: '100%' }}>
-  <LinearProgress/>
-</Box>
-           
-        
- 
+            <LinearProgress/>
+          </Box>
         )}
     
         <div className="p-4 py-8">
@@ -47,7 +44,7 @@ function SignInForm({ register, errors, isLoading}:TAuthProps) {
           <div>
             <TextField
               label={t('auth.index.input.label')}
-              className="w-full"
+              className="w-full custom-text-input"
               error={errors.email}
               helperText={errors.email ? errors.email?.message : false}
               {...register("email", {
@@ -75,8 +72,8 @@ function SignInForm({ register, errors, isLoading}:TAuthProps) {
           </div>
         </div>
         </div>
-        
       </Card>
+      <AuthFooter/>
       </Container>
     </div>
   )

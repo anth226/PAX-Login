@@ -15,6 +15,15 @@
                 }
             }
         },
+        "agreement": {
+            "input": {
+                "label": "I Agree",
+                "errors": {
+                    "required": "You must agree to our Terms and Services"
+                }
+            },
+            "buttonTitle": "Agree & Continue"
+        },
         "password": {
             "header": "Hi User",
             "title": "To continue, first verify it's you",

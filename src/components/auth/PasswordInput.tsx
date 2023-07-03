@@ -69,7 +69,7 @@ function PasswordInput({ register, errors, isLoading}:TAuthProps) {
               <TextField
                 type={showPassword ? "text" : "password"}
                 label={t('auth.password.input.label')}
-                className="w-full"
+                className="w-full custom-text-input"
                 error={errors.password}
                 helperText={errors.password ? errors.password?.message : false}
                 {...register("password", {
@@ -111,6 +111,7 @@ function PasswordInput({ register, errors, isLoading}:TAuthProps) {
           </div>
        </div> 
        </Card>
+       <AuthFooter/>
       </Container>
     </div>
   )

@@ -19,8 +19,13 @@ import { TAuthProps } from "../../shared/types/auth";
 import Link from "next/link";
 import useLocalStorage from "../../shared/hooks/useLocalStorage";
 import useTranslation from 'next-translate/useTranslation'
+import { FormHelperText } from "@material-ui/core";
+import AuthFooter from "../ui/AuthFooter";
 
-function Agreement() {
+function Agreement({ register, errors, isLoading, getValues}:TAuthProps) {
+  const [email, setEmail] = useLocalStorage("email", "")
+  const {t} = useTranslation("common")
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <Container maxWidth="xs">
@@ -34,28 +39,37 @@ function Agreement() {
                 <AccountCircle />
               </Avatar>
               <div className="text-sm text-[#202124]">
-               admin@expale.com
+               {email}
               </div>
-                <KeyboardArrowDownRoundedIcon className="h-4 w-4" />
             </div>
           </div>
           
           <div className=" text-[#202124] mt-6 text-sm" >
             In order to continue with login process you must acknowledge that you have read and agree to both the PXM Training Terms of Service and Privacy Policy.Using any PXM Training services signifies your acceptance of all related service-specific terms.<br/><br/>
-
             Once done, check the box bellow" which serves as your confirmation to agreement on these documents. Once the box is checked,you may click the button below to proceed.
-
-
           </div>
           <FormGroup className="my-4">
-            <FormControlLabel control={<Checkbox  />} label="I Agree" />
-            </FormGroup>
-<div className="flex justify-end mb-4">
-<Button variant="contained" className="">Agree & Continue</Button>
-
-</div>
-        
+            <FormControlLabel control={
+              <Checkbox
+                {...register("tos", {
+                      required: {
+                        value: true,
+                        message: t('auth.agreement.input.errors.required'),
+                      },
+                })}
+              />
+            } label={t('auth.agreement.input.label')}
+            style={{marginLeft:0,marginTop:"0.5rem"}}
+            />
+            {errors.tos?.message ? (
+              <FormHelperText style={{color:"red"}}>{errors.tos?.message}</FormHelperText>
+            ):(null)}
+          </FormGroup>
+          <div className="flex justify-end mb-4">
+            <CustomButton  title={t('auth.agreement.buttonTitle')} isLoading={isLoading}/>
+          </div>
         </Card>
+        <AuthFooter/>
       </Container>
     </div>
   )

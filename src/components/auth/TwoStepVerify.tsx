@@ -22,6 +22,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { formatPhoneNumber } from '../../shared/utils/helper';
 import { sendOTPCodeMailApi, sendOTPCodePhoneApi } from '../../api/auth';
 import { apiErrorToast, successToast } from '../../shared/toastifier/toastify';
+import AuthFooter from '../ui/AuthFooter';
 
 
 
@@ -83,7 +84,7 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
 
   return (
     <div className="flex justify-center items-center py-8 ">
-      <Container maxWidth="sm">
+      <Container maxWidth="xs">
       <Card variant="outlined" style={{ filter: isLoading ? 'opacity(70%)' : 'blur(0)' }} >
         {isLoading&& (
            <Box sx={{ width: '100%' }}>
@@ -117,7 +118,7 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
           <div>
             <TextField
               label={t('auth.two-step.input.label')}
-              className="w-full "
+              className="w-full custom-text-input"
               error={errors.code}
               helperText={errors.code ? errors.code?.message : false}
               {...register("code", {
@@ -143,6 +144,7 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
         </div>
         </div>
       </Card>
+      <AuthFooter/>
       </Container>
     </div>
   )

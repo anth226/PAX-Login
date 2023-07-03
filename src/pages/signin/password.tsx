@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react'
 import PasswordInput from '../../components/auth/PasswordInput'
 import { useForm } from 'react-hook-form';
 import { apiErrorToast, successToast } from '../../shared/toastifier/toastify';
-import { sendOTPCodeMailApi, sendOTPCodePhoneApi, signInApi, verifyTwoStepApi } from '../../api/auth';
+import { sendOTPCodeMailApi, sendOTPCodePhoneApi, sendTOSAgreementApi, setUpdatePasswordAuthApi, signInApi, verifyTwoStepApi } from '../../api/auth';
 import { useRouter } from 'next/router';
 import AccountRecovery from '../../components/auth/AccountRecovery';
 import TwoStepVerify from '../../components/auth/TwoStepVerify';
 import useTranslation from 'next-translate/useTranslation'
 import CryptoJS from 'crypto-js'
 import { customShowInputError } from '../../shared/utils/helper';
+import Agreement from '../../components/auth/Agreement';
+import ResetPasswordForm from '../../components/auth/ResetPasswordForm';
 
 type FormData = {
   email?: string,
@@ -16,14 +18,16 @@ type FormData = {
   code?: string,
   phone?: string,
   recoveryType?: string,
-  otpCountDown?: number
+  otpCountDown?: number,
+  tos?: boolean,
+  confirm_password?: string,
 };
 
 function Password() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const { register, handleSubmit, setValue, getValues, setError, formState: { errors } } = useForm<FormData>();
+    const { register, handleSubmit, setValue, getValues, watch, setError, formState: { errors } } = useForm<FormData>();
     const router = useRouter()
-    const [page, setPage] = useState('password')
+    const [page, setPage] = useState('recovery')
     const {t} = useTranslation('common')
 
     useEffect(()=>{
@@ -43,6 +47,10 @@ function Password() {
             await handleAccountRecovery(data)
         } else if(page==="2-step") {
             await handleTwoStepSubmit(data)
+        } else if(page==="agreement") {
+            await handleAgreementSubmit(data)
+        } else if(page==="reset-password") {
+            await handleResetPassword(data)
         }
         setIsLoading(false)
     }
@@ -55,7 +63,13 @@ function Password() {
                 setValue("phone", response.data.user.phone)
                 setPage("recovery")
             } else {
-                successFullLogin(response)
+                if(response.data?.user?.requirePassReset) {
+                    setPage("password-reset")
+                } else if(!response.data?.user?.hasAcceptedLatestTOS) {
+                    setPage("agreement")
+                } else {
+                    successFullLogin(response)
+                }
             }
         } catch (error) {
             customShowInputError('password', error, setError)
@@ -66,7 +80,13 @@ function Password() {
     const handleTwoStepSubmit = async (data: FormData) => {
         try {
             const response = await verifyTwoStepApi(data)
-            successFullLogin(response)
+            if(response.data?.user?.requirePassReset) {
+                setPage("reset-password")
+            } else if(!response.data?.user?.hasAcceptedLatestTOS) {
+                setPage("agreement")
+            } else {
+                successFullLogin(response)
+            }
         } catch (error) {
             if(error.response.status===429) {
                 window.location.href = process.env.NEXT_PUBLIC_WEB_APP_URL ?? "/"
@@ -94,6 +114,24 @@ function Password() {
         }
     }
 
+    const handleAgreementSubmit = async (data: FormData) => {
+        try {
+            const response = await sendTOSAgreementApi(data)
+            successFullLogin(response)
+        } catch (error) {
+            apiErrorToast(error)
+        }
+    }
+
+    const handleResetPassword = async (data:FormData) => {
+        try {
+            const response = await setUpdatePasswordAuthApi(data)
+            successFullLogin(response)
+        } catch (error) {
+            apiErrorToast(error)
+        }
+     }
+
     const successFullLogin = (response: any) => {
         successToast(t('auth.password.success'))
         localStorage.setItem('accessToken', JSON.stringify(response.data?.accessToken))
@@ -106,9 +144,13 @@ function Password() {
         {page==="recovery" ? (
             <AccountRecovery isLoading={isLoading} setValue={setValue} getValues={getValues}/>
         ):page==="2-step" ? (
-            <TwoStepVerify isLoading={isLoading} errors={errors} register={register}  getValues={getValues}/>
+            <TwoStepVerify isLoading={isLoading} errors={errors} register={register} getValues={getValues}/>
+        ):page==="agreement" ? (
+            <Agreement register={register} errors={errors} isLoading={isLoading} getValues={getValues}/>
+        ):page==="reset-password" ? (
+            <ResetPasswordForm errors={errors} register={register} isLoading={isLoading} watch={watch} />
         ):(
-            <PasswordInput register={register} errors={errors} isLoading={isLoading} />
+            <PasswordInput register={register} errors={errors} isLoading={isLoading}  getValues={getValues}/>
         )}
     </form>
   )

@@ -26,6 +26,7 @@ import { TAuthProps } from '../../shared/types/auth';
 import useLocalStorage from '../../shared/hooks/useLocalStorage';
 import useTranslation from 'next-translate/useTranslation'
 import { formatPhoneNumber } from '../../shared/utils/helper';
+import AuthFooter from '../ui/AuthFooter';
 
 
 
@@ -37,7 +38,7 @@ function AccountRecovery({ isLoading, setValue, getValues }:TAuthProps) {
 
   return (
     <div className="flex justify-center items-center p-8 px-0">
-      <Container maxWidth="sm">
+      <Container maxWidth="xs">
       <Card variant="outlined" className="pb-16">
 
         <div className='p-8 pb-4'>
@@ -107,6 +108,7 @@ function AccountRecovery({ isLoading, setValue, getValues }:TAuthProps) {
         </List>
       </Card>
       <button className='hidden' type='submit' ref={buttonRef}>Submit</button>
+      <AuthFooter/>
       </Container>
     </div>
   )

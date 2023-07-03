@@ -1,5 +1,9 @@
 {
   "locales": ["en", "es"],
+  "languages": [
+    {"name":"English", "value": "en"},
+    {"name":"Spanish", "value": "es"}
+  ],
   "defaultLocale": "en",
   "localePath": false,
   "pages": {

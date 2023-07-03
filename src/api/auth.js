@@ -48,8 +48,15 @@ export const setUpdatePasswordApi = async (data) => {
       password: data.password,
       reset_code: data.reset_code,
     };
-    console.log(newData);
     return await axiosInstance.put("/auth/password", newData);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const setUpdatePasswordAuthApi = async (data) => {
+  try {
+    return await axiosInstance.put("/auth/user/password", data);
   } catch (error) {
     throw error;
   }
@@ -70,3 +77,13 @@ export const sendOTPCodeMailApi = async (data) => {
     throw error;
   }
 };
+
+export const sendTOSAgreementApi = async (data) => {
+  try {
+    return await axiosInstance.post("/tos/accept", data);
+  } catch (error) {
+    throw error;
+  }
+};
+
+

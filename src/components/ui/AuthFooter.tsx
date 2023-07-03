@@ -1,8 +1,13 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
+import useTranslation from 'next-translate/useTranslation';
 import React from 'react'
+import i18nConfig from '../../../i18n.json'
 
 function AuthFooter() {
-    const [language, setLanguage] = React.useState('English');
+  const {lang} = useTranslation()
+    const [language, setLanguage] = React.useState(lang);
+
+    const {languages} = i18nConfig
 
     const handleChange = (event) => {
       setLanguage(event.target.value as string);
@@ -20,9 +25,11 @@ function AuthFooter() {
             disableUnderline={true}
             onChange={handleChange}
           >
-            <MenuItem value='Nepali'>Nepali</MenuItem>
-            <MenuItem value='Hindi'>Hindi</MenuItem>
-            <MenuItem value='English'>English</MenuItem>
+            {languages?.map(lan=>{
+              return(
+                <MenuItem value={lan.value}>{lan.name}</MenuItem>
+              )
+            })}
           </Select>
         </FormControl>
         </div>
