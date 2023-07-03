@@ -25,11 +25,13 @@ import LockIcon from '@mui/icons-material/Lock';
 import { TAuthProps } from '../../shared/types/auth';
 import useLocalStorage from '../../shared/hooks/useLocalStorage';
 import useTranslation from 'next-translate/useTranslation'
+import { formatPhoneNumber } from '../../shared/utils/helper';
 
 
 
-function AccountRecovery({ isLoading, setValue }:TAuthProps) {
+function AccountRecovery({ isLoading, setValue, getValues }:TAuthProps) {
   const [email, setEmail] = useLocalStorage("email", "")
+  const [phone, setPhone] = useLocalStorage("phone", "")
   const {t} = useTranslation("common")
   const buttonRef = useRef<any>(null)
 
@@ -74,7 +76,7 @@ function AccountRecovery({ isLoading, setValue }:TAuthProps) {
               </div>
           </ListItem>
           <Divider variant="middle" className='mx-8' />
-
+      
           <ListItem disabled={isLoading} button className='px-8 p-4' onClick={()=>{
             setValue("recoveryType", "phone")
             buttonRef.current?.click()
@@ -82,12 +84,13 @@ function AccountRecovery({ isLoading, setValue }:TAuthProps) {
             <div className='flex items-center gap-4  cursor-pointer'>    
               <ChatIcon color='primary'/>  
               <div className='flex flex-col gap-1'>
-                      <div className='text-sm text-[#202124]'>{t('auth.recovery.verify_code', {phone:"*** *****15"})}</div>
+                      <div className='text-sm text-[#202124]'>{t('auth.recovery.verify_code', {phone: formatPhoneNumber(getValues('phone'))})}</div>
                       <div className='text-xs'>{t('auth.recovery.rates')}</div>
                   </div> 
               </div>
           </ListItem>
           <Divider variant="middle" className='mx-8' />
+         
 
           <ListItem button className='px-8 p-4' disabled>
             <div className='flex items-center gap-4  cursor-pointer'>    

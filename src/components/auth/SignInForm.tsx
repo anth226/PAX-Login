@@ -1,21 +1,39 @@
 import React from 'react'
-import { Button, Card, TextField, Container } from "@mui/material";
+import { Button, Card, TextField, Container,styled } from "@mui/material";
 import LogoImg from '../../images/logo.svg'
 import Image from 'next/image';
 import CustomButton from '../ui/CustomButton';
 import { TAuthProps } from '../../shared/types/auth';
 import useTranslation from 'next-translate/useTranslation'
+import LinearProgress from '@mui/material/LinearProgress';
 import Link from 'next/link';
+import { Box } from '@material-ui/core';
 
 
 function SignInForm({ register, errors, isLoading}:TAuthProps) {
   const { t } = useTranslation("common")
 
+  
+
+
+
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <Container maxWidth="xs">
-      <Card variant="outlined" className="p-4 py-8">
+      <Container maxWidth="xs" className=' relative' >
+      
+      <Card variant="outlined" style={{ filter: isLoading ? 'opacity(70%)' : 'blur(0)' }} >
+        {isLoading&& (
+           
+           <Box sx={{ width: '100%' }}>
+  <LinearProgress/>
+</Box>
+           
+        
+ 
+        )}
+    
+        <div className="p-4 py-8">
         <div className="flex justify-center items-center">
           <Image alt='Logo' src={LogoImg} className="h-14 w-14 text-center" />
         </div>
@@ -50,17 +68,14 @@ function SignInForm({ register, errors, isLoading}:TAuthProps) {
               {t('auth.index.footerLink')}
             </span>
           </div>
-          <div className="flex justify-between items-center">
-            <Link
-                className="text-[#1a73e8] font-medium cursor-pointer text-sm"
-                href={"/signin/forgot"}
-              >
-                {t('auth.index.forgot')}
-              </Link>
+            <div className="flex justify-end items-center">
+           
             {/* <Button variant="text">Create account</Button> */}
             <CustomButton title={t('auth.index.buttonTitle')} isLoading={isLoading}/>
           </div>
         </div>
+        </div>
+        
       </Card>
       </Container>
     </div>

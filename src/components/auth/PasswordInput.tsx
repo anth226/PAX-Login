@@ -11,26 +11,40 @@ import {
 } from "@mui/material";
 import {AccountCircle} from "@material-ui/icons"
 import LogoImg from '../../images/logo.svg'
-import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import Image from "next/image";
 import CustomButton from "../ui/CustomButton";
 import { TAuthProps } from "../../shared/types/auth";
 import Link from "next/link";
 import useLocalStorage from "../../shared/hooks/useLocalStorage";
 import useTranslation from 'next-translate/useTranslation'
+import LinearProgress from '@mui/material/LinearProgress';
+import ReCAPTCHA from "react-google-recaptcha";
+import AuthFooter from "../ui/AuthFooter";
+
+
+const reCaptchaKey = process.env.NEXT_PUBLIC_GOOGLE_RECAPTCH_KEY;
 
 
 
 function PasswordInput({ register, errors, isLoading}:TAuthProps) {
+
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const {t} = useTranslation("common")
     const [email, setEmail] = useLocalStorage("email", "")
+    const [isCaptchResolved, setIsCaptchaResolved] = useState(false)
 
   return (
     <div className="flex justify-center items-center min-h-screen">
       <Container maxWidth="xs">
-        <Card variant="outlined" className="p-4 py-8">
+        
+      <Card variant="outlined" style={{ filter: isLoading ? 'opacity(70%)' : 'blur(0)' }} >
+        {isLoading&& (
+           <Box sx={{ width: '100%' }}>
+            <LinearProgress/>
+          </Box>
+        )}
+        <div className="p-4 py-8">
           <div className="flex justify-center items-center">
             <Image alt="Logo" src={LogoImg} className="h-14 w-14 text-center" />
           </div>
@@ -43,7 +57,6 @@ function PasswordInput({ register, errors, isLoading}:TAuthProps) {
               <div className="text-sm text-[#202124]">
                 {email}
               </div>
-                <KeyboardArrowDownRoundedIcon className="h-4 w-4" />
             </div>
           </div>
           
@@ -77,17 +90,26 @@ function PasswordInput({ register, errors, isLoading}:TAuthProps) {
                 style={{marginLeft:0,marginTop:"0.5rem"}}
               />
           </div>
-            <div className="flex justify-between items-center">
-              <Link
-                className="text-[#1a73e8] font-medium cursor-pointer text-sm"
-                href={"/signin/forgot"}
-              >
-                {t('auth.password.forgot')}
-              </Link>
-              <CustomButton title={t('auth.password.buttonTitle')} isLoading={isLoading}/>
-            </div>
+          <div className="flex justify-center">
+            <ReCAPTCHA
+              sitekey={`${reCaptchaKey}`}
+              onChange={setIsCaptchaResolved}
+              onExpired={()=>setIsCaptchaResolved(false)}
+              onErrored={()=>setIsCaptchaResolved(false)}
+            />
           </div>
-        </Card>
+          <div className="flex justify-between items-center">
+            <Link
+              className="text-[#1a73e8] font-medium cursor-pointer text-sm"
+              href={"/signin/forgot"}
+            >
+              {t('auth.password.forgot')}
+            </Link>
+            <CustomButton  title={t('auth.password.buttonTitle')} isLoading={isLoading} isDisabled={!isCaptchResolved}/>
+          </div>
+          </div>
+       </div> 
+       </Card>
       </Container>
     </div>
   )

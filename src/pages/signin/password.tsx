@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import AccountRecovery from '../../components/auth/AccountRecovery';
 import TwoStepVerify from '../../components/auth/TwoStepVerify';
 import useTranslation from 'next-translate/useTranslation'
-
+import CryptoJS from 'crypto-js'
 
 type FormData = {
   email?: string,
@@ -47,9 +47,9 @@ function Password() {
 
     const handlePasswordSubmit = async (data: FormData) => {
         try {
+            data.password = CryptoJS.AES.encrypt(data.password, process.env.NEXT_PUBLIC_ENCRIPTION_KEY ?? "").toString();
             const response = await signInApi(data)
-            // TODO:: Only For Demo || Need to check if user has 2 step enabled for prod
-            if(response.data?.user?.phone) {
+            if(response.data?.user?.isTwoFactorAuthenticationEnabled) {
                 setValue("phone", response.data.user.phone)
                 setPage("recovery")
             } else {
@@ -92,7 +92,7 @@ function Password() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
         {page==="recovery" ? (
-            <AccountRecovery isLoading={isLoading} setValue={setValue}/>
+            <AccountRecovery isLoading={isLoading} setValue={setValue} getValues={getValues}/>
         ):page==="2-step" ? (
             <TwoStepVerify isLoading={isLoading} errors={errors} register={register}  getValues={getValues}/>
         ):(

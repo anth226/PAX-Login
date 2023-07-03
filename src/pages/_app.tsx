@@ -4,6 +4,7 @@ import 'dotenv/config'
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 
 import { ToastContainer } from "react-toastify";
+import AuthFooter from "../components/ui/AuthFooter";
 
 const theme = createTheme();
 const App = ({ Component, pageProps }) => {

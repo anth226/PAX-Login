@@ -13,6 +13,9 @@ import Image from "next/image";
 import CustomButton from "../ui/CustomButton";
 import { TAuthProps } from "../../shared/types/auth";
 import useTranslation from 'next-translate/useTranslation'
+import LinearProgress from '@mui/material/LinearProgress';
+import AuthFooter from "../ui/AuthFooter";
+
 
 
 function ForgotPassword({ register, errors, isLoading}:TAuthProps) {
@@ -20,7 +23,13 @@ function ForgotPassword({ register, errors, isLoading}:TAuthProps) {
   return (
     <div className="flex justify-center items-center min-h-screen">
       <Container maxWidth="xs">
-        <Card variant="outlined" className="p-4 py-8">
+      <Card variant="outlined" style={{ filter: isLoading ? 'opacity(70%)' : 'blur(0)' }} >
+        {isLoading&& (
+           <Box sx={{ width: '100%' }}>
+            <LinearProgress/>
+          </Box>
+        )}
+        <div className="p-4 py-8">
           <div className="flex justify-center items-center">
             <Image alt="Logo" src={LogoImg} className="h-14 w-14 text-center" />
           </div>
@@ -32,6 +41,7 @@ function ForgotPassword({ register, errors, isLoading}:TAuthProps) {
               {t('auth.forgot.title')}
             </div>
           </div>
+          
 
           <div className="my-10 flex flex-col gap-10 w-full">
             <div>
@@ -48,13 +58,18 @@ function ForgotPassword({ register, errors, isLoading}:TAuthProps) {
                 })}
               />
             </div>
-            <div className="flex justify-end">
+            <div className="flex justify-between items-center">
+              <Button href='/signin/password'   color='primary'>
+                Go Back
+              </Button>
               <CustomButton title={t('auth.forgot.buttonTitle')} isLoading={isLoading}/>
             </div>
           </div>
-        </Card>
-      </Container>
-    </div>
+        </div>
+      </Card>
+      <AuthFooter/>
+    </Container>    
+  </div>
   );
 }
 

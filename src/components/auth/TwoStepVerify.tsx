@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {
     Box,
     Button,
@@ -18,6 +18,11 @@ import CustomButton from '../ui/CustomButton';
 import { TAuthProps } from '../../shared/types/auth';
 import useLocalStorage from '../../shared/hooks/useLocalStorage';
 import useTranslation from 'next-translate/useTranslation'
+import LinearProgress from '@mui/material/LinearProgress';
+import { formatPhoneNumber } from '../../shared/utils/helper';
+import { sendOTPCodeMailApi, sendOTPCodePhoneApi } from '../../api/auth';
+import { apiErrorToast } from '../../shared/toastifier/toastify';
+
 
 
 
@@ -26,11 +31,52 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
   const recoveryType: string = getValues('recoveryType')
   const phone: string = getValues('phone')
   const {t} = useTranslation("common")
+  const [canResendOtp, setCanResendOtp] = useState(false)
+  const [countdown, setCountdown] = useState(60);
+
+  useEffect(() => {
+    let timer: any;
+    if (countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown(prevCountdown => prevCountdown - 1);
+      }, 1000);
+    } else {
+      setCanResendOtp(true)
+    }
+    return () => {
+      clearInterval(timer);
+    };
+  }, [countdown]);
+
+  const resendOTP = async () => {
+    const recoveryType = getValues('recoveryType')
+    try {
+      if(recoveryType==="mail") {
+          let data = {
+            email: getValues('email')
+          }
+          await sendOTPCodeMailApi(data)
+        } else if(recoveryType==="phone") {
+          let data = {
+            phone: getValues('phone')
+          }
+          await sendOTPCodePhoneApi(data)   
+        }
+    } catch (error) {
+        apiErrorToast(error)
+    }
+  }
 
   return (
     <div className="flex justify-center items-center py-8 ">
       <Container maxWidth="sm">
-      <Card variant="outlined" className="p-8">
+      <Card variant="outlined" style={{ filter: isLoading ? 'opacity(70%)' : 'blur(0)' }} >
+        {isLoading&& (
+           <Box sx={{ width: '100%' }}>
+            <LinearProgress/>
+        </Box>)}
+      <div className="p-4 py-8">
+
         <div className="flex justify-center items-center">
           <Image alt='Logo' src={LogoImg} className="h-14 w-14 text-center" />
         </div>
@@ -50,7 +96,7 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
         </div>
         <div className='mt-8'>
           <div className=" text-[#202124] mt-2 text-sm">
-            {t('auth.two-step.text', {phone: recoveryType=="mail" ? email : phone})}
+            {t('auth.two-step.text', {phone: recoveryType=="mail" ? email : formatPhoneNumber(phone)})}
           </div>
         </div>
         
@@ -59,9 +105,7 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
             <TextField
               label={t('auth.two-step.input.label')}
               className="w-full "
-              InputProps={{
-                startAdornment: <InputAdornment position="start">G-</InputAdornment>,
-              }}
+             
               error={errors.code}
               helperText={errors.code ? errors.code?.message : false}
               {...register("code", {
@@ -79,14 +123,12 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
           </div>
 
           <div className="flex justify-between items-center">
-            {/* <div
-              className="text-[#1a73e8] font-medium text-sm cursor-pointer"
-              onClick={() => setPage("verify-options")}
-            >
-              Try Another Way
-            </div> */}
+            <Button type='button' onClick={resendOTP} variant="contained" color="secondary" size='small' disabled={!canResendOtp}>
+              {!canResendOtp ? `Resend OTP in ${countdown}s` : 'Resend OTP'}
+            </Button>
             <CustomButton title={t('auth.two-step.buttonTitle')} isLoading={isLoading}/>
           </div>
+        </div>
         </div>
       </Card>
       </Container>

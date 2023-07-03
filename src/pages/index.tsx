@@ -18,13 +18,18 @@ function SignInPage() {
   const onSubmit = async (data:FormData) => {
     setIsLoading(true)
     try {
-      await verifyEmailApi(data)
+    const response=  await verifyEmailApi(data)
+     
       localStorage.setItem("email", JSON.stringify(data.email))
-      router.push("/signin/password")
+      router.replace("/signin/password")
     } catch (error) {
       apiErrorToast(error)
     }
+   setTimeout(() => {
     setIsLoading(false)
+   }, 2000);
+  
+
   }
 
   return (
