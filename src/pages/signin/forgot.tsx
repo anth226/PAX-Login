@@ -69,7 +69,7 @@ function Forgot() {
             successToast(t('auth.forgot.success'))
             setHasSent(true)
         } catch (error) {
-            customShowInputError('code', error, setError)
+            customShowInputError('email', error, setError)
             apiErrorToast(error)
         }
         setIsLoading(false)

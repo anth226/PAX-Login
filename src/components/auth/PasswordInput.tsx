@@ -20,6 +20,7 @@ import useTranslation from 'next-translate/useTranslation'
 import LinearProgress from '@mui/material/LinearProgress';
 import ReCAPTCHA from "react-google-recaptcha";
 import AuthFooter from "../ui/AuthFooter";
+import { validatePasswordComplexity } from "../../shared/utils/helper";
 
 
 const reCaptchaKey = process.env.NEXT_PUBLIC_GOOGLE_RECAPTCH_KEY;
@@ -74,12 +75,12 @@ function PasswordInput({ register, errors, isLoading}:TAuthProps) {
                 {...register("password", {
                   required: {
                     value: true,
-                    message: t('auth.password.input.errors.required')
+                    message: t('auth.password.input.errors.required'),
                   },
                   minLength: {
                     value: 6,
                     message: t('auth.password.input.errors.length', {length:6})
-                  }
+                  },
                 })}
               />
               <FormControlLabel
