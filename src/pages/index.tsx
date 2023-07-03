@@ -5,6 +5,7 @@ import { verifyEmailApi} from '../api/auth'
 import { apiErrorToast } from '../shared/toastifier/toastify'
 import SignInForm from '../components/auth/SignInForm';
 import { useRouter } from 'next/router';
+import { customShowInputError } from '../shared/utils/helper';
 
 type FormData = {
   email: string,
@@ -12,24 +13,20 @@ type FormData = {
 
 function SignInPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const { register, handleSubmit, setError, formState: { errors } } = useForm<FormData>();
   const router = useRouter()
 
   const onSubmit = async (data:FormData) => {
     setIsLoading(true)
     try {
-    const response=  await verifyEmailApi(data)
-     
+      const response=  await verifyEmailApi(data)
       localStorage.setItem("email", JSON.stringify(data.email))
       router.replace("/signin/password")
     } catch (error) {
+      customShowInputError('email', error, setError)
       apiErrorToast(error)
     }
-   setTimeout(() => {
     setIsLoading(false)
-   }, 2000);
-  
-
   }
 
   return (

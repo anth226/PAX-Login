@@ -21,7 +21,7 @@ import useTranslation from 'next-translate/useTranslation'
 import LinearProgress from '@mui/material/LinearProgress';
 import { formatPhoneNumber } from '../../shared/utils/helper';
 import { sendOTPCodeMailApi, sendOTPCodePhoneApi } from '../../api/auth';
-import { apiErrorToast } from '../../shared/toastifier/toastify';
+import { apiErrorToast, successToast } from '../../shared/toastifier/toastify';
 
 
 
@@ -30,15 +30,16 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
   const [email, setEmail] = useLocalStorage("email", "")
   const recoveryType: string = getValues('recoveryType')
   const phone: string = getValues('phone')
+  const count = getValues("otpCountDown")
   const {t} = useTranslation("common")
   const [canResendOtp, setCanResendOtp] = useState(false)
-  const [countdown, setCountdown] = useState(60);
+  const [countdown, setResendOtpCountDown] = useState(count || 120);
 
   useEffect(() => {
     let timer: any;
     if (countdown > 0) {
       timer = setInterval(() => {
-        setCountdown(prevCountdown => prevCountdown - 1);
+        setResendOtpCountDown(prevCountdown => prevCountdown - 1);
       }, 1000);
     } else {
       setCanResendOtp(true)
@@ -48,22 +49,35 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
     };
   }, [countdown]);
 
+  const resetOTPProcess = (resendIn=120) => {
+    setCanResendOtp(false)
+    setResendOtpCountDown(resendIn)
+  }
+
   const resendOTP = async () => {
     const recoveryType = getValues('recoveryType')
     try {
+      let response: any;
       if(recoveryType==="mail") {
           let data = {
             email: getValues('email')
           }
-          await sendOTPCodeMailApi(data)
+          response = await sendOTPCodeMailApi(data)
         } else if(recoveryType==="phone") {
           let data = {
             phone: getValues('phone')
           }
-          await sendOTPCodePhoneApi(data)   
+          response = await sendOTPCodePhoneApi(data)   
+        }
+        successToast(`OTP Sent to your ${recoveryType}`)
+        if(response?.data?.resendIn) {
+          resetOTPProcess(response.data.resendIn)
         }
     } catch (error) {
-        apiErrorToast(error)
+      if(error?.response?.data?.resendIn) {
+        resetOTPProcess(error?.response?.data?.resendIn)
+      }
+      apiErrorToast(error)
     }
   }
 
@@ -91,7 +105,6 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
             <div className="text-sm text-[#202124]">
               {email}
             </div>
-              <KeyboardArrowDownRoundedIcon className="h-4 w-4" />
           </div>
         </div>
         <div className='mt-8'>
@@ -105,7 +118,6 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
             <TextField
               label={t('auth.two-step.input.label')}
               className="w-full "
-             
               error={errors.code}
               helperText={errors.code ? errors.code?.message : false}
               {...register("code", {
@@ -123,7 +135,7 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
           </div>
 
           <div className="flex justify-between items-center">
-            <Button type='button' onClick={resendOTP} variant="contained" color="secondary" size='small' disabled={!canResendOtp}>
+            <Button type='button' onClick={resendOTP} variant="outlined" color="primary" size='small' disabled={!canResendOtp}>
               {!canResendOtp ? `Resend OTP in ${countdown}s` : 'Resend OTP'}
             </Button>
             <CustomButton title={t('auth.two-step.buttonTitle')} isLoading={isLoading}/>

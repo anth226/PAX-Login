@@ -8,18 +8,20 @@ import AccountRecovery from '../../components/auth/AccountRecovery';
 import TwoStepVerify from '../../components/auth/TwoStepVerify';
 import useTranslation from 'next-translate/useTranslation'
 import CryptoJS from 'crypto-js'
+import { customShowInputError } from '../../shared/utils/helper';
 
 type FormData = {
   email?: string,
   password?: string,
   code?: string,
   phone?: string,
-  recoveryType?: string
+  recoveryType?: string,
+  otpCountDown?: number
 };
 
 function Password() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm<FormData>();
+    const { register, handleSubmit, setValue, getValues, setError, formState: { errors } } = useForm<FormData>();
     const router = useRouter()
     const [page, setPage] = useState('password')
     const {t} = useTranslation('common')
@@ -56,6 +58,7 @@ function Password() {
                 successFullLogin(response)
             }
         } catch (error) {
+            customShowInputError('password', error, setError)
             apiErrorToast(error)
         }
     }
@@ -65,16 +68,25 @@ function Password() {
             const response = await verifyTwoStepApi(data)
             successFullLogin(response)
         } catch (error) {
+            if(error.response.status===429) {
+                window.location.href = process.env.NEXT_PUBLIC_WEB_APP_URL ?? "/"
+            }
+            customShowInputError('code', error, setError)
             apiErrorToast(error)
         }
     }
 
     const handleAccountRecovery = async (data: FormData) => {
         try {
+            let response: any;
             if(data.recoveryType==="mail") {
-                await sendOTPCodeMailApi(data)
+                response = await sendOTPCodeMailApi(data)
             } else if(data.recoveryType==="phone") {
-                await sendOTPCodePhoneApi(data)   
+                response = await sendOTPCodePhoneApi(data)   
+            }
+            successToast(`OTP Sent to your ${data.recoveryType}`)
+            if(response?.data?.resendIn) {
+                setValue('otpCountDown', response.data.resendIn)
             }
             setPage("2-step")
         } catch (error) {

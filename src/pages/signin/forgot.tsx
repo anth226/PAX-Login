@@ -12,6 +12,7 @@ import{
 } from "@mui/material";
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
 import { useRouter } from 'next/router';
+import { customShowInputError } from '../../shared/utils/helper';
 
 
 type FormData = {
@@ -35,7 +36,7 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
 
 function Forgot() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>();
+    const { register, handleSubmit, setError, formState: { errors } } = useForm<FormData>();
     const {t} = useTranslation("common")
     const [hasSent, setHasSent] = useState<boolean>(false)
 
@@ -59,6 +60,8 @@ function Forgot() {
       }
     },[progress])
 
+
+
     const onSubmit = async (data:FormData) => {
         setIsLoading(true)
         try {
@@ -66,6 +69,7 @@ function Forgot() {
             successToast(t('auth.forgot.success'))
             setHasSent(true)
         } catch (error) {
+            customShowInputError('code', error, setError)
             apiErrorToast(error)
         }
         setIsLoading(false)

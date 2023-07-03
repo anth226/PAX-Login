@@ -31,7 +31,7 @@ import { formatPhoneNumber } from '../../shared/utils/helper';
 
 function AccountRecovery({ isLoading, setValue, getValues }:TAuthProps) {
   const [email, setEmail] = useLocalStorage("email", "")
-  const [phone, setPhone] = useLocalStorage("phone", "")
+  const phone = getValues("phone")
   const {t} = useTranslation("common")
   const buttonRef = useRef<any>(null)
 
@@ -76,20 +76,24 @@ function AccountRecovery({ isLoading, setValue, getValues }:TAuthProps) {
               </div>
           </ListItem>
           <Divider variant="middle" className='mx-8' />
-      
-          <ListItem disabled={isLoading} button className='px-8 p-4' onClick={()=>{
-            setValue("recoveryType", "phone")
-            buttonRef.current?.click()
-          }}>
-            <div className='flex items-center gap-4  cursor-pointer'>    
-              <ChatIcon color='primary'/>  
-              <div className='flex flex-col gap-1'>
-                      <div className='text-sm text-[#202124]'>{t('auth.recovery.verify_code', {phone: formatPhoneNumber(getValues('phone'))})}</div>
-                      <div className='text-xs'>{t('auth.recovery.rates')}</div>
-                  </div> 
-              </div>
-          </ListItem>
-          <Divider variant="middle" className='mx-8' />
+
+          {phone ? (
+            <>
+            <ListItem disabled={isLoading} button className='px-8 p-4' onClick={()=>{
+              setValue("recoveryType", "phone")
+              buttonRef.current?.click()
+            }}>
+              <div className='flex items-center gap-4  cursor-pointer'>    
+                <ChatIcon color='primary'/>  
+                <div className='flex flex-col gap-1'>
+                        <div className='text-sm text-[#202124]'>{t('auth.recovery.verify_code', {phone: formatPhoneNumber(phone)})}</div>
+                        <div className='text-xs'>{t('auth.recovery.rates')}</div>
+                    </div> 
+                </div>
+            </ListItem>
+            <Divider variant="middle" className='mx-8' />
+            </>
+          ):(null)}
          
 
           <ListItem button className='px-8 p-4' disabled>
