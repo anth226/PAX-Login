@@ -18,7 +18,7 @@ export const customShowInputError = (key: any, error: any, setError: Function) =
 
 export const validatePasswordComplexity = (value) => {
   // password complexity requirements
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
   if (!value.match(passwordRegex)) {
     return 'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character.';
   }

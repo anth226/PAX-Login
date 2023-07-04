@@ -17,9 +17,17 @@ export const verifyEmailApi = async (data) => {
   }
 };
 
-export const verifyTwoStepApi = async (data) => {
+export const verifyTwoStepMailApi = async (data) => {
   try {
     return await axiosInstance.post("/auth/verify/mail", data);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const verifyTwoStepPhoneApi = async (data) => {
+  try {
+    return await axiosInstance.post("/auth/verify/otp/phone", data);
   } catch (error) {
     throw error;
   }

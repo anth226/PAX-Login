@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PasswordInput from '../../components/auth/PasswordInput'
 import { useForm } from 'react-hook-form';
 import { apiErrorToast, successToast } from '../../shared/toastifier/toastify';
-import { sendOTPCodeMailApi, sendOTPCodePhoneApi, sendTOSAgreementApi, setUpdatePasswordAuthApi, signInApi, verifyTwoStepApi } from '../../api/auth';
+import { sendOTPCodeMailApi, sendOTPCodePhoneApi, sendTOSAgreementApi, setUpdatePasswordAuthApi, signInApi, verifyTwoStepMailApi, verifyTwoStepPhoneApi } from '../../api/auth';
 import { useRouter } from 'next/router';
 import AccountRecovery from '../../components/auth/AccountRecovery';
 import TwoStepVerify from '../../components/auth/TwoStepVerify';
@@ -77,12 +77,18 @@ function Password() {
 
     const handleTwoStepSubmit = async (data: FormData) => {
         try {
-            const response = await verifyTwoStepApi(data)
-            if(response.data?.user?.requirePassReset) {
+            data.code = CryptoJS.AES.encrypt(data.code, process.env.NEXT_PUBLIC_ENCRIPTION_KEY ?? "").toString();
+            let response: any;
+            if(data.recoveryType==="mail") {
+                response = await verifyTwoStepMailApi(data)
+            } else if(data.recoveryType==="phone") {
+                response = await verifyTwoStepPhoneApi(data)   
+            }
+            if(response?.data?.user?.requirePassReset) {
                 setPage("reset-password")
-            } else if(!response.data?.user?.hasAcceptedLatestTOS) {
+            } else if(!response?.data?.user?.hasAcceptedLatestTOS) {
                 setPage("agreement")
-            } else {
+            } else if(response) {
                 successFullLogin(response)
             }
         } catch (error) {

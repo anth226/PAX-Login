@@ -33,12 +33,8 @@ function ResetPassword() {
     const onSubmit = async (data:FormData) => {
       try {
         // encrypt newData
-
         data.password = CryptoJS.AES.encrypt(data.password, process.env.NEXT_PUBLIC_ENCRIPTION_KEY ?? "").toString();
-        
         data.confirm_password = CryptoJS.AES.encrypt(data.confirm_password, process.env.NEXT_PUBLIC_ENCRIPTION_KEY ?? "").toString();
-        
-
         await setUpdatePasswordApi(data)
         successToast(t("auth.resetpwd.success"));
         router.push("/")
