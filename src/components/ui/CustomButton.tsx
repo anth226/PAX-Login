@@ -1,4 +1,4 @@
-import { CircularProgress, Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import React from 'react'
 
 function CustomButton({title="Submit", color="primary", isLoading=false, type="submit", isDisabled=false}) {

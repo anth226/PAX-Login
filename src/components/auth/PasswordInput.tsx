@@ -9,7 +9,7 @@ import {
   TextField,
   Avatar,
 } from "@mui/material";
-import {AccountCircle} from "@material-ui/icons"
+import {AccountCircle} from "@mui/icons-material"
 import LogoImg from '../../images/logo.svg'
 import Image from "next/image";
 import CustomButton from "../ui/CustomButton";
@@ -50,18 +50,18 @@ function PasswordInput({ register, errors, isLoading}:TAuthProps) {
             <Image alt="Logo" src={LogoImg} className="h-14 w-14 text-center" />
           </div>
           <div className="flex flex-col gap-2 items-center my-4">
-            <div className="text-2xl text-[#202124]">{t('auth.password.header')}</div>
+            <div className="text-2xl text-[#202124] dark:text-[#ddd]">{t('auth.password.header')}</div>
             <div className="flex items-center justify-center rounded-full border border-gray-300 p-1 gap-2 cursor-pointer">
               <Avatar className="w-6 h-6">
                 <AccountCircle />
               </Avatar>
-              <div className="text-sm text-[#202124]">
+              <div className="text-sm text-[#202124] dark:text-[#ddd] ">
                 {email}
               </div>
             </div>
           </div>
           
-          <div className=" text-[#202124] mt-6 text-sm" >
+          <div className=" text-[#202124] dark:text-[#ddd] mt-6 text-sm" >
             {t('auth.password.title')}
           </div>
           <div className="my-4 flex flex-col gap-14 w-full">
@@ -69,7 +69,7 @@ function PasswordInput({ register, errors, isLoading}:TAuthProps) {
               <TextField
                 type={showPassword ? "text" : "password"}
                 label={t('auth.password.input.label')}
-                className="w-full custom-text-input"
+                className="w-full custom-text-input dark:text-[#ddd]"
                 error={errors.password}
                 helperText={errors.password ? errors.password?.message : false}
                 {...register("password", {
@@ -87,12 +87,13 @@ function PasswordInput({ register, errors, isLoading}:TAuthProps) {
                 control={<Checkbox />}
                 label={t('auth.password.show')}
                 onChange={handleClickShowPassword}
-                className="text-sm"
+                className="text-sm dark:text-[#ddd]"
                 style={{marginLeft:0,marginTop:"0.5rem"}}
               />
           </div>
           <div className="flex justify-center">
             <ReCAPTCHA
+            
               sitekey={`${reCaptchaKey}`}
               onChange={setIsCaptchaResolved}
               onExpired={()=>setIsCaptchaResolved(false)}

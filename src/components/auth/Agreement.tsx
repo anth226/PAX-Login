@@ -9,8 +9,9 @@ import {
   TextField,
   Avatar,
   FormGroup,
+  FormHelperText
 } from "@mui/material";
-import {AccountCircle} from "@material-ui/icons"
+import {AccountCircle} from "@mui/icons-material"
 import LogoImg from '../../images/logo.svg'
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import Image from "next/image";
@@ -19,7 +20,6 @@ import { TAuthProps } from "../../shared/types/auth";
 import Link from "next/link";
 import useLocalStorage from "../../shared/hooks/useLocalStorage";
 import useTranslation from 'next-translate/useTranslation'
-import { FormHelperText } from "@material-ui/core";
 import AuthFooter from "../ui/AuthFooter";
 
 function Agreement({ register, errors, isLoading, getValues}:TAuthProps) {
@@ -38,13 +38,13 @@ function Agreement({ register, errors, isLoading, getValues}:TAuthProps) {
               <Avatar className="w-6 h-6">
                 <AccountCircle />
               </Avatar>
-              <div className="text-sm text-[#202124]">
+              <div className="text-sm text-[#202124] dark:text-[#ddd]">
                {email}
               </div>
             </div>
           </div>
           
-          <div className=" text-[#202124] mt-6 text-sm" >
+          <div className=" text-[#202124]  dark:text-[#ddd] mt-6 text-sm" >
             In order to continue with login process you must acknowledge that you have read and agree to both the PXM Training Terms of Service and Privacy Policy.Using any PXM Training services signifies your acceptance of all related service-specific terms.<br/><br/>
             Once done, check the box bellow which serves as your confirmation to agreement on these documents. Once the box is checked, you may click the button below to proceed.
           </div>

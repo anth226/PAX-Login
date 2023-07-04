@@ -7,6 +7,7 @@ import SignInForm from '../components/auth/SignInForm';
 import { useRouter } from 'next/router';
 import { customShowInputError } from '../shared/utils/helper';
 
+
 type FormData = {
   email: string,
 };
@@ -31,8 +32,7 @@ function SignInPage() {
 
   return (
     <>
-    <form onSubmit={handleSubmit(onSubmit)}>
-      
+    <form onSubmit={handleSubmit(onSubmit)} className='py-8'>
       <SignInForm register={register} errors={errors} isLoading={isLoading} />
     </form>
     </>

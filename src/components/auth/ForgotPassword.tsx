@@ -29,15 +29,15 @@ function ForgotPassword({ register, errors, isLoading}:TAuthProps) {
             <LinearProgress/>
           </Box>
         )}
-        <div className="p-4 py-8">
+        <div className="p-4 py-8 ">
           <div className="flex justify-center items-center">
             <Image alt="Logo" src={LogoImg} className="h-14 w-14 text-center" />
           </div>
           <div className="flex flex-col gap-2 items-center my-4">
-            <div className=" text-2xl text-[#202124]">
+            <div className=" text-2xl text-[#202124] dark:text-[#ddd]">
               {t('auth.forgot.header')}
             </div>
-            <div className=" text-[#202124]">
+            <div className=" text-[#202124] dark:text-[#ddd]">
               {t('auth.forgot.title')}
             </div>
           </div>
@@ -47,7 +47,7 @@ function ForgotPassword({ register, errors, isLoading}:TAuthProps) {
             <div>
               <TextField
                 label={t('auth.forgot.input.label')}
-                className="w-full"
+                className="w-full "
                 error={errors.email}
                 helperText={errors.email ? errors.email?.message : false}
                 {...register("email", {
@@ -58,7 +58,7 @@ function ForgotPassword({ register, errors, isLoading}:TAuthProps) {
                 })}
               />
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center ">
               <Button href='/signin/password'   color='primary'>
                 Go Back
               </Button>

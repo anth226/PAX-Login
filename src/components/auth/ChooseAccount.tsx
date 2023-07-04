@@ -23,7 +23,7 @@ function ChooseAccount() {
       </div>
 
       <div className="flex flex-col gap-2 items-center my-4 mb-8">
-        <div className="text-xl text-[#202124]">Choose an Account</div>
+        <div className="text-xl text-[#202124] dark:[#ddd]">Choose an Account</div>
       </div>
     
      
@@ -31,8 +31,8 @@ function ChooseAccount() {
       <div className="flex items-center  rounded-full border border-gray-300 my-3 gap-6">
           <Image alt='Logo' src={LogoImg} className="h-8 w-8 rounded-full" />
           <div className='flex flex-col'>
-            <div className='text-[#202124] text-sm font-medium'>James Blain</div>
-            <div className="text-sm text-[#202124]">
+            <div className='text-[#202124] dark:[#ddd] text-sm font-medium'>James Blain</div>
+            <div className="text-sm text-[#202124] dark:[#ddd]">
             adminuser@gmail.com{" "}
           </div>
           </div>
@@ -45,7 +45,7 @@ function ChooseAccount() {
           <AccountCircleOutlinedIcon />
         </div>
         <div className='flex flex-col gap-1'>
-            <div className=' text-[#202124]'>Log Out & Use Different Login</div>
+            <div className=' text-[#202124] dark:[#ddd]'>Log Out & Use Different Login</div>
         </div> 
       </div>
       <Divider />

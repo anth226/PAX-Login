@@ -1,12 +1,14 @@
 import React, { useEffect,useState } from 'react'
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { Button, Card, FormControlLabel, TextField ,Checkbox, Container, Alert} from "@mui/material";
+import { Button, Card, FormControlLabel, TextField ,Checkbox, Container, Alert, Box} from "@mui/material";
 import LogoImg from '../../images/logo.svg'
 import CustomButton from '../ui/CustomButton';
 import useTranslation from 'next-translate/useTranslation';
 import { validatePasswordComplexity } from '../../shared/utils/helper';
 import AuthFooter from '../ui/AuthFooter';
+import LinearProgress from '@mui/material/LinearProgress';
+
 
 
 function ResetPasswordForm({errors, register, isLoading, watch}) {
@@ -17,12 +19,20 @@ function ResetPasswordForm({errors, register, isLoading, watch}) {
   return (
     <div className="flex justify-center items-center py-8 min-h-screen">
       <Container maxWidth="xs">
-        <Card variant="outlined" className="p-8">
+      <Card variant="outlined" style={{ filter: isLoading ? 'opacity(70%)' : 'blur(0)' }} >
+        {isLoading&& (
+           <Box sx={{ width: '100%' }}>
+            <LinearProgress/>
+          </Box>
+        )}
+          <div className='py-8 px-4'>
+
+         
           <div className="flex justify-center items-center">
             <Image alt='Logo' src={LogoImg} className="h-14 w-14 text-center" />
           </div>
           <div className="flex flex-col gap-2 items-center my-4">
-            <div className=" text-2xl text-[#202124]">{t("auth.resetpwd.reset")}</div>
+            <div className=" text-2xl text-[#202124] dark:text-[#ddd]">{t("auth.resetpwd.reset")}</div>
           </div>
           <div className="my-10 flex flex-col gap-10 w-full">
             <div>
@@ -65,7 +75,7 @@ function ResetPasswordForm({errors, register, isLoading, watch}) {
               <CustomButton isLoading={isLoading} title='Submit'/>
             </div>
             </div>
-        </Card>
+        </div></Card>
         <AuthFooter/>
       </Container>
   </div>

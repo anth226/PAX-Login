@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import useTranslation from 'next-translate/useTranslation';
 import React from 'react'
 import i18nConfig from '../../../i18n.json'
@@ -14,16 +14,17 @@ function AuthFooter() {
     };
   
   return (
-    <div className='flex justify-between items-center text-[#202124] text-sm mt-4'>
+    <div className='flex justify-between items-center text-primary dark:text-dark text-sm mt-4'>
         <div>
             
-        <FormControl fullWidth className='text-[#202124] text-xs '>
+        <FormControl fullWidth className='text-primary  dark:text-dark text-xs language-select '>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={language}
             disableUnderline={true}
             onChange={handleChange}
+            className='text-xs dark:text-[#ddd]'
           >
             {languages?.map(lan=>{
               return(

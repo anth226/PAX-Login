@@ -9,7 +9,7 @@ import {
     TextField,
     Avatar
   } from "@mui/material";
-import {AccountCircle} from "@material-ui/icons"
+import {AccountCircle} from "@mui/icons-material"
 import LogoImg from '../../images/logo.svg'
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import Image from "next/image";
@@ -97,19 +97,19 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
         </div>
 
         <div className="flex flex-col gap-2 items-center my-4">
-          <div className="text-2xl text-black">{t('auth.two-step.header')}</div>
-          <div className=" text-[#202124] ">{t('auth.two-step.title')}</div>
-          <div className="flex items-center justify-center rounded-full border border-gray-300 p-1 gap-2 cursor-pointer">
-            <Avatar className="w-6 h-6">
+          <div className="text-xl text-black">{t('auth.two-step.header')}</div>
+          <div className=" text-[#202124] dark:text-[#ddd] text-sm ">{t('auth.two-step.title')}</div>
+          <div className="flex items-center justify-center rounded-full border border-gray-300  gap-2 cursor-pointer">
+            <Avatar className="w-5 h-5">
               <AccountCircle />
             </Avatar>
-            <div className="text-sm text-[#202124]">
+            <div className="text-xs text-[#202124] dark:text-[#ddd] ">
               {email}
             </div>
           </div>
         </div>
-        <div className='mt-8'>
-          <div className=" text-[#202124] mt-2 text-sm">
+        <div className='mt-6'>
+          <div className=" text-[#202124] dark:text-[#ddd]  text-sm">
             {t('auth.two-step.text', {phone: recoveryType=="mail" ? email : formatPhoneNumber(phone)})}
           </div>
         </div>
@@ -118,7 +118,7 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
           <div>
             <TextField
               label={t('auth.two-step.input.label')}
-              className="w-full custom-text-input"
+              className="w-full custom-text-input text-sm dark:text[#ddd]"
               error={errors.code}
               helperText={errors.code ? errors.code?.message : false}
               {...register("code", {
@@ -131,7 +131,8 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
             <FormControlLabel
               control={<Checkbox defaultChecked />}
               label={t('auth.two-step.ask_again')}
-              style={{marginLeft:0,marginTop:"0.5rem"}}
+              style={{marginLeft:0,marginTop:"0.5rem",color:'#ddd'}}
+              className='text-sm'
             />
           </div>
 

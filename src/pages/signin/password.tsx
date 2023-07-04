@@ -7,10 +7,10 @@ import { useRouter } from 'next/router';
 import AccountRecovery from '../../components/auth/AccountRecovery';
 import TwoStepVerify from '../../components/auth/TwoStepVerify';
 import useTranslation from 'next-translate/useTranslation'
-import CryptoJS from 'crypto-js'
 import { customShowInputError } from '../../shared/utils/helper';
 import Agreement from '../../components/auth/Agreement';
 import ResetPasswordForm from '../../components/auth/ResetPasswordForm';
+import * as CryptoJS from 'crypto-js'
 
 type FormData = {
   email?: string,

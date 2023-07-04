@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, TextField, Container,styled } from "@mui/material";
+import { Button, Card, TextField, Container,styled,Box } from "@mui/material";
 import LogoImg from '../../images/logo.svg'
 import Image from 'next/image';
 import CustomButton from '../ui/CustomButton';
@@ -7,7 +7,6 @@ import { TAuthProps } from '../../shared/types/auth';
 import useTranslation from 'next-translate/useTranslation'
 import LinearProgress from '@mui/material/LinearProgress';
 import Link from 'next/link';
-import { Box } from '@material-ui/core';
 import AuthFooter from '../ui/AuthFooter';
 
 
@@ -35,8 +34,8 @@ function SignInForm({ register, errors, isLoading}:TAuthProps) {
           <Image alt='Logo' src={LogoImg} className="h-14 w-14 text-center" />
         </div>
         <div className="flex flex-col gap-2 items-center my-4">
-          <div className="text-2xl text-[#202124]">{t('auth.index.header')}</div>
-          <div className="font-normal text-[#202124] tracking-normal">
+          <div className="text-2xl  text-[#202124] dark:text-[#ddd] ">{t('auth.index.header')}</div>
+          <div className="font-normal  text-[#202124] dark:text-[#ddd] tracking-normal">
             {t('auth.index.title')}
           </div>
         </div>
@@ -44,7 +43,7 @@ function SignInForm({ register, errors, isLoading}:TAuthProps) {
           <div>
             <TextField
               label={t('auth.index.input.label')}
-              className="w-full custom-text-input"
+              className="w-full custom-text-input  "
               error={errors.email}
               helperText={errors.email ? errors.email?.message : false}
               {...register("email", {
@@ -59,7 +58,7 @@ function SignInForm({ register, errors, isLoading}:TAuthProps) {
               })}
             />
           </div>
-          <div className="text-[#5f6368] text-sm">
+          <div className="text-[#5f6368] text-sm dark:text-[#ddd]">
             {t('auth.index.footerText')}
             <span className="text-[#1a73e8] font-medium  block cursor-pointer ">
               {t('auth.index.footerLink')}
