@@ -12,12 +12,6 @@ import AuthFooter from '../ui/AuthFooter';
 
 function SignInForm({ register, errors, isLoading}:TAuthProps) {
   const { t } = useTranslation("common")
-
-  
-
-
-
-
   return (
     <div className="flex justify-center items-center min-h-screen">
       <Container maxWidth="xs" className=' relative' >
@@ -28,7 +22,6 @@ function SignInForm({ register, errors, isLoading}:TAuthProps) {
             <LinearProgress/>
           </Box>
         )}
-    
         <div className="p-4 py-8">
         <div className="flex justify-center items-center">
           <Image alt='Logo' src={LogoImg} className="h-14 w-14 text-center" />

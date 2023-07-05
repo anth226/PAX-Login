@@ -23,3 +23,13 @@ export const validatePasswordComplexity = (value) => {
     return 'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character.';
   }
 };
+
+export function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  // Generate a random six-digit hexadecimal color code
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}

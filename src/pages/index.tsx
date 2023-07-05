@@ -6,7 +6,8 @@ import { apiErrorToast } from '../shared/toastifier/toastify'
 import SignInForm from '../components/auth/SignInForm';
 import { useRouter } from 'next/router';
 import { customShowInputError } from '../shared/utils/helper';
-
+import useLocalStorage from '../shared/hooks/useLocalStorage';
+import ChooseAccount from '../components/auth/ChooseAccount';
 
 type FormData = {
   email: string,
@@ -14,14 +15,17 @@ type FormData = {
 
 function SignInPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const { register, handleSubmit, setError, formState: { errors } } = useForm<FormData>();
+  const { register, handleSubmit, setError, setValue, formState: { errors } } = useForm<FormData>();
   const router = useRouter()
+  const [email, setEmail] = useLocalStorage("email", "")
+  const [emails, setEmails] = useLocalStorage("emails", [])
+  const [showAddNew, setShowAddNew] = useState<boolean>(false)
 
   const onSubmit = async (data:FormData) => {
     setIsLoading(true)
     try {
-      const response=  await verifyEmailApi(data)
-      localStorage.setItem("email", JSON.stringify(data.email))
+      await verifyEmailApi(data)
+      setEmail(data.email)
       router.replace("/signin/password")
     } catch (error) {
       customShowInputError('email', error, setError)
@@ -33,7 +37,11 @@ function SignInPage() {
   return (
     <>
     <form onSubmit={handleSubmit(onSubmit)} className='py-8'>
+    {emails && emails?.length && !showAddNew ? (
+      <ChooseAccount setShowAddNew={setShowAddNew} setValue={setValue} isLoading={isLoading} emails={emails}/>
+    ):(
       <SignInForm register={register} errors={errors} isLoading={isLoading} />
+      )}
     </form>
     </>
   )

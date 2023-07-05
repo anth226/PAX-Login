@@ -11,6 +11,7 @@ import { customShowInputError } from '../../shared/utils/helper';
 import Agreement from '../../components/auth/Agreement';
 import ResetPasswordForm from '../../components/auth/ResetPasswordForm';
 import * as CryptoJS from 'crypto-js'
+import useLocalStorage from '../../shared/hooks/useLocalStorage';
 
 type FormData = {
   email?: string,
@@ -29,6 +30,7 @@ function Password() {
     const router = useRouter()
     const [page, setPage] = useState('password')
     const {t} = useTranslation('common')
+    const [emails, setEmails] = useLocalStorage("emails", [])
 
     useEffect(()=>{
         const email = localStorage.getItem('email')
@@ -124,6 +126,9 @@ function Password() {
             successFullLogin(response)
         } catch (error) {
             apiErrorToast(error)
+            if(error.response.status===401) {
+                window.location.href = process.env.NEXT_PUBLIC_WEB_APP_URL ?? "/"
+            }
         }
     }
 
@@ -136,14 +141,19 @@ function Password() {
                 successFullLogin(response)
             }
         } catch (error) {
+            if(error.response.status===401) {
+                window.location.href = process.env.NEXT_PUBLIC_WEB_APP_URL ?? "/"
+            }
             apiErrorToast(error)
         }
      }
 
     const successFullLogin = (response: any) => {
         successToast(t('auth.password.success'))
-        localStorage.setItem('accessToken', JSON.stringify(response.data?.accessToken))
-        localStorage.setItem('refreshToken', JSON.stringify(response.data?.refreshToken))
+        const email = getValues('email')
+        if(!emails.includes(email)) {
+            setEmails([...emails, email])
+        }
         window.location.href = process.env.NEXT_PUBLIC_WEB_APP_URL ?? "/"
     }
 

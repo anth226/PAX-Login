@@ -80,5 +80,9 @@
         }
     },
     "yes": "Yes",
-    "tap": "Tap"
+    "tap": "Tap",
+    "help": "Help",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "choose_account": "Choose an Account"
 }
