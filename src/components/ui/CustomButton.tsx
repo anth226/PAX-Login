@@ -1,7 +1,7 @@
 import { Button } from '@mui/material'
 import React from 'react'
 
-function CustomButton({title="Submit", color="primary", isLoading=false, type="submit", isDisabled=false}) {
+function CustomButton({title="Submit", color="primary", isLoading=false, type="submit", isDisabled=false, handleClick= () => {}}) {
   return (
     !isLoading ? (
       <Button href='' variant="contained" type={type} color='primary' disabled={isDisabled}>
@@ -14,6 +14,7 @@ function CustomButton({title="Submit", color="primary", isLoading=false, type="s
       className='py-2'  
       color='primary'
       type='button'
+      onClick={handleClick}
       >
        {title}
       </Button>

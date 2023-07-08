@@ -8,6 +8,7 @@ import {
   FormControlLabel,
   TextField,
   Avatar,
+  Typography,
 } from "@mui/material";
 import {AccountCircle} from "@mui/icons-material"
 import LogoImg from '../../images/logo.svg'
@@ -18,22 +19,13 @@ import Link from "next/link";
 import useLocalStorage from "../../shared/hooks/useLocalStorage";
 import useTranslation from 'next-translate/useTranslation'
 import LinearProgress from '@mui/material/LinearProgress';
-import ReCAPTCHA from "react-google-recaptcha";
 import AuthFooter from "../ui/AuthFooter";
-import { validatePasswordComplexity } from "../../shared/utils/helper";
-
-
-const reCaptchaKey = process.env.NEXT_PUBLIC_GOOGLE_RECAPTCH_KEY;
-
-
 
 function PasswordInput({ register, errors, isLoading}:TAuthProps) {
-
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const {t} = useTranslation("common")
     const [email, setEmail] = useLocalStorage("email", "")
-    const [isCaptchResolved, setIsCaptchaResolved] = useState(false)
 
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -50,8 +42,8 @@ function PasswordInput({ register, errors, isLoading}:TAuthProps) {
             <Image alt="Logo" src={LogoImg} className="h-14 w-14 text-center" />
           </div>
           <div className="flex flex-col gap-2 items-center my-4">
-            <div className="text-2xl text-[#202124] dark:text-[#ddd]">{t('auth.password.header')}</div>
-            <div className="flex items-center justify-center rounded-full border border-gray-300 p-1 gap-2 cursor-pointer">
+            <Typography variant='h5'>{t('auth.password.header')}</Typography>
+            <div className="flex items-center justify-center rounded-full border border-gray-300 p-1 gap-2">
               <Avatar className="w-6 h-6">
                 <AccountCircle />
               </Avatar>
@@ -91,15 +83,7 @@ function PasswordInput({ register, errors, isLoading}:TAuthProps) {
                 style={{marginLeft:0,marginTop:"0.5rem"}}
               />
           </div>
-          <div className="flex justify-center">
-            <ReCAPTCHA
-            
-              sitekey={`${reCaptchaKey}`}
-              onChange={setIsCaptchaResolved}
-              onExpired={()=>setIsCaptchaResolved(false)}
-              onErrored={()=>setIsCaptchaResolved(false)}
-            />
-          </div>
+          
           <div className="flex justify-between items-center">
             <Link
               className="text-[#1a73e8] font-medium cursor-pointer text-sm"
@@ -107,7 +91,7 @@ function PasswordInput({ register, errors, isLoading}:TAuthProps) {
             >
               {t('auth.password.forgot')}
             </Link>
-            <CustomButton  title={t('auth.password.buttonTitle')} isLoading={isLoading} isDisabled={!isCaptchResolved}/>
+            <CustomButton  title={t('auth.password.buttonTitle')} isLoading={isLoading}/>
           </div>
           </div>
        </div> 

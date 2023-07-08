@@ -1,0 +1,88 @@
+{
+    "auth": {
+        "index": {
+            "header": "Iniciar sesión",
+            "title": "Utiliza tu Cuenta de PAX Training",
+            "footerText": "¿No es tu computadora? Utiliza el modo Invitado para iniciar sesión de forma privada.",
+            "footerLink": "Obtener más información",
+            "buttonTitle": "Siguiente",
+            "forgot": "¿Olvidaste tu contraseña?",
+            "input": {
+                "label":"Dirección de correo electrónico",
+                "errors": {
+                    "invalid": "Dirección de correo electrónico no válida",
+                    "required": "Se requiere el correo electrónico."
+                }
+            }
+        },
+        "agreement": {
+            "input": {
+                "label": "Acepto",
+                "errors": {
+                    "required": "Debes aceptar nuestros Términos y Servicios"
+                }
+            },
+            "buttonTitle": "Aceptar y Continuar"
+        },
+        "password": {
+            "header": "Hola Usuario",
+            "title": "Para continuar, primero verifica que seas tú",
+            "input": {
+                "label": "Ingresa tu contraseña",
+                "errors":{
+                    "required": "Se requiere la contraseña.",
+                    "length": "La contraseña debe tener al menos {{length}} caracteres"
+                }
+            },
+            "show": "Mostrar contraseña",
+            "forgot": "¿Olvidaste tu contraseña?",
+            "buttonTitle": "Iniciar sesión",
+            "success": "¡Inicio de sesión exitoso!"
+        },
+        "recovery": {
+            "header": "Recuperación de cuenta",
+            "title": "Para mantener segura tu cuenta, PAX desea asegurarse de que seas tú quien intenta iniciar sesión",
+            "choose": "Elige cómo quieres iniciar sesión:",
+            "phone": "en tu teléfono o tablet",
+            "verify_code": "Obtener un código de verificación en {{phone}}",
+            "rates": "Se aplican tarifas estándar",
+            "another": "Intentar otra forma de inicio de sesión"
+        },
+        "two-step":{
+            "header": "Verificación en 2 pasos",
+            "title": "Este paso adicional demuestra que realmente eres tú quien intenta iniciar sesión",
+            "text": "Se ha enviado un mensaje de texto con un código de verificación de 6 dígitos a {{phone}}",
+            "input": {
+                "label": "Ingresa el código",
+                "errors":{
+                    "required":"Se requiere el código."
+                }
+            },
+            "ask_again": "No volver a preguntar en esta computadora",
+            "buttonTitle": "Enviar"
+        },
+        "forgot": {
+            "header": "¿Olvidaste tu contraseña?",
+            "title": "Ingresa tu correo electrónico",
+            "input":{
+                "label": "Dirección de correo electrónico",
+                "errors":{
+                    "required": "Se requiere el correo electrónico."
+                }
+            },
+            "buttonTitle": "Siguiente",
+            "success": "Se ha enviado el enlace para restablecer la contraseña a tu correo.",
+            "message": "Se ha enviado el enlace para restablecer la contraseña a tu correo. Por favor, verifica tu bandeja de entrada."
+        },
+        "resetpwd": {
+            "reset": "Restablecer contraseña",
+            "success": "¡Contraseña actualizada con éxito!"
+        }
+    },
+    "yes": "Sí",
+    "tap": "Toca",
+    "help": "Ayuda",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "choose_account": "Elegir una cuenta"
+}

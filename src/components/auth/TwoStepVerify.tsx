@@ -7,11 +7,11 @@ import {
     Container,
     FormControlLabel,
     TextField,
-    Avatar
+    Avatar,
+    Typography
   } from "@mui/material";
 import {AccountCircle} from "@mui/icons-material"
 import LogoImg from '../../images/logo.svg'
-import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import Image from "next/image";
 import InputAdornment from '@mui/material/InputAdornment';
 import CustomButton from '../ui/CustomButton';
@@ -20,17 +20,17 @@ import useLocalStorage from '../../shared/hooks/useLocalStorage';
 import useTranslation from 'next-translate/useTranslation'
 import LinearProgress from '@mui/material/LinearProgress';
 import { formatPhoneNumber } from '../../shared/utils/helper';
-import { sendOTPCodeMailApi, sendOTPCodePhoneApi } from '../../api/auth';
 import { apiErrorToast, successToast } from '../../shared/toastifier/toastify';
 import AuthFooter from '../ui/AuthFooter';
+import { sendOTPCodeApi } from '../../api/auth';
 
 
 
 
 function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
   const [email, setEmail] = useLocalStorage("email", "")
-  const recoveryType: string = getValues('recoveryType')
-  const phone: string = getValues('phone')
+  const method = getValues('method')
+
   const count = getValues("otpCountDown")
   const {t} = useTranslation("common")
   const [canResendOtp, setCanResendOtp] = useState(false)
@@ -56,24 +56,14 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
   }
 
   const resendOTP = async () => {
-    const recoveryType = getValues('recoveryType')
+    setCanResendOtp(false)
     try {
-      let response: any;
-      if(recoveryType==="mail") {
-          let data = {
-            email: getValues('email')
-          }
-          response = await sendOTPCodeMailApi(data)
-        } else if(recoveryType==="phone") {
-          let data = {
-            phone: getValues('phone')
-          }
-          response = await sendOTPCodePhoneApi(data)   
-        }
-        successToast(`OTP Sent to your ${recoveryType}`)
-        if(response?.data?.resendIn) {
-          resetOTPProcess(response.data.resendIn)
-        }
+      const data = {methodId: method.id}
+      const response = await sendOTPCodeApi(data)
+      successToast(`OTP Sent to your ${method.methodType}`)
+      if(response?.data?.resendIn) {
+        resetOTPProcess(response.data.resendIn)
+      }
     } catch (error) {
       if(error?.response?.data?.resendIn) {
         resetOTPProcess(error?.response?.data?.resendIn)
@@ -83,7 +73,7 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
   }
 
   return (
-    <div className="flex justify-center items-center py-8 ">
+    <div className="flex justify-center items-center min-h-screen py-4">
       <Container maxWidth="xs">
       <Card variant="outlined" style={{ filter: isLoading ? 'opacity(70%)' : 'blur(0)' }} >
         {isLoading&& (
@@ -97,9 +87,9 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
         </div>
 
         <div className="flex flex-col gap-2 items-center my-4">
-          <div className="text-xl text-black">{t('auth.two-step.header')}</div>
-          <div className=" text-[#202124] dark:text-[#ddd] text-sm ">{t('auth.two-step.title')}</div>
-          <div className="flex items-center justify-center rounded-full border border-gray-300  gap-2 cursor-pointer">
+          <Typography variant='h5'>{t('auth.two-step.header')}</Typography>
+          <Typography variant="caption">{t('auth.two-step.title')}</Typography>
+          <div className="mt-4 flex items-center justify-center rounded-full border border-gray-300  gap-2">
             <Avatar className="w-5 h-5">
               <AccountCircle />
             </Avatar>
@@ -109,12 +99,10 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
           </div>
         </div>
         <div className='mt-6'>
-          <div className=" text-[#202124] dark:text-[#ddd]  text-sm">
-            {t('auth.two-step.text', {phone: recoveryType=="mail" ? email : formatPhoneNumber(phone)})}
-          </div>
+          <Typography variant='subtitle2'>{t('auth.two-step.text',{phone: method.methodDetail})}</Typography>
         </div>
         
-        <div className="my-10 flex flex-col gap-10 w-full">
+        <div className="my-4 flex flex-col gap-10 w-full">
           <div>
             <TextField
               label={t('auth.two-step.input.label')}
@@ -131,7 +119,7 @@ function TwoStepVerify({errors, register, isLoading, getValues}:TAuthProps) {
             <FormControlLabel
               control={<Checkbox defaultChecked />}
               label={t('auth.two-step.ask_again')}
-              style={{marginLeft:0,marginTop:"0.5rem",color:'#ddd'}}
+              style={{marginLeft:0,marginTop:"0.5rem"}}
               className='text-sm'
             />
           </div>

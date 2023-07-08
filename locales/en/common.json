@@ -46,7 +46,8 @@
             "phone": "on your phone or tablets",
             "verify_code": "Get a verify code at {{phone}}",
             "rates": "Standard rates apply",
-            "another": "Try another way to signin"
+            "another": "Try another way to signin",
+            "no_two_step": "2FA is enabled but no recovery methods found for this account."
         },
         "two-step":{
             "header": "2-Step Verification",
@@ -62,8 +63,8 @@
             "buttonTitle": "Submit"
         },
         "forgot": {
-            "header": "Find your email",
-            "title": "Enter your phone number or recovery email",
+            "header": "Forgot your password",
+            "title": "Enter your email",
             "input":{
                 "label": "Email Address",
                 "errors":{
@@ -84,5 +85,6 @@
     "help": "Help",
     "privacy": "Privacy",
     "terms": "Terms",
-    "choose_account": "Choose an Account"
+    "choose_account": "Choose an Account",
+    "tos": "Terms and Service(s)"
 }

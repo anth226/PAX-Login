@@ -9,11 +9,12 @@ import {
   TextField,
   Avatar,
   FormGroup,
-  FormHelperText
+  FormHelperText,
+  LinearProgress,
+  Typography
 } from "@mui/material";
 import {AccountCircle} from "@mui/icons-material"
 import LogoImg from '../../images/logo.svg'
-import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import Image from "next/image";
 import CustomButton from '../ui/CustomButton'
 import { TAuthProps } from "../../shared/types/auth";
@@ -27,14 +28,21 @@ function Agreement({ register, errors, isLoading, getValues}:TAuthProps) {
   const {t} = useTranslation("common")
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex justify-center items-center min-h-screen py-4">
       <Container maxWidth="xs">
-        <Card variant="outlined" className="p-4 py-8">
+        <Card variant="outlined" style={{ filter: isLoading ? 'opacity(70%)' : 'blur(0)' }}>
+          {isLoading&& (
+            <Box sx={{ width: '100%' }}>
+              <LinearProgress/>
+            </Box>
+          )}
+          <div className="p-4 py-8">
           <div className="flex justify-center items-center">
             <Image alt="Logo" src={LogoImg} className="h-14 w-14 text-center" />
           </div>
           <div className="flex flex-col gap-2 items-center my-4">
-            <div className="flex items-center justify-center rounded-full border border-gray-300 p-1 gap-2 cursor-pointer">
+            <Typography variant='h5'>{t('tos')}</Typography>
+            <div className="flex items-center justify-center rounded-full border border-gray-300 p-1 gap-2">
               <Avatar className="w-6 h-6">
                 <AccountCircle />
               </Avatar>
@@ -67,6 +75,7 @@ function Agreement({ register, errors, isLoading, getValues}:TAuthProps) {
           </FormGroup>
           <div className="flex justify-end mb-4">
             <CustomButton  title={t('auth.agreement.buttonTitle')} isLoading={isLoading}/>
+          </div>
           </div>
         </Card>
         <AuthFooter/>

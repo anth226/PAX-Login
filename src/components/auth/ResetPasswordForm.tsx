@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import Image from 'next/image';
-import { Card, FormControlLabel, TextField ,Checkbox, Container, Alert, Box} from "@mui/material";
+import { Card, FormControlLabel, TextField ,Checkbox, Container, Alert, Box, Typography} from "@mui/material";
 import LogoImg from '../../images/logo.svg'
 import CustomButton from '../ui/CustomButton';
 import useTranslation from 'next-translate/useTranslation';
@@ -27,7 +27,7 @@ function ResetPasswordForm({errors, register, isLoading, watch}) {
                 <Image alt='Logo' src={LogoImg} className="h-14 w-14 text-center" />
               </div>
               <div className="flex flex-col gap-2 items-center my-4">
-                <div className=" text-2xl text-[#202124] dark:text-[#ddd]">{t("auth.resetpwd.reset")}</div>
+                <Typography variant='h5'>{t('auth.resetpwd.reset')}</Typography>
               </div>
               <div className="my-10 flex flex-col gap-10 w-full">
                 <div>
@@ -36,9 +36,9 @@ function ResetPasswordForm({errors, register, isLoading, watch}) {
                       id="demo-helper-text-misaligned"
                       label="Enter your password"
                       className="w-full custom-text-input"
-                      error={errors.password ? true : false}
-                      helperText={errors.password ? errors.password?.message : false}
-                      {...register("password", {
+                      error={errors.new_password ? true : false}
+                      helperText={errors.new_password ? errors.new_password?.message : false}
+                      {...register("new_password", {
                         required: {
                           value: true,
                           message: "Password is required."
@@ -54,7 +54,7 @@ function ResetPasswordForm({errors, register, isLoading, watch}) {
                       error={errors.confirm_password ? true : false}
                       helperText={errors.confirm_password? errors.confirm_password?.message : false}
                       {...register("confirm_password", {
-                        validate: (value) => value === watch('password') || 'Passwords must match.',
+                        validate: (value) => value === watch('new_password') || 'Passwords must match.',
                       })}
                       style={{marginTop:"1rem"}}
                     />

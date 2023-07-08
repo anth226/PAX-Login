@@ -3,14 +3,17 @@ import useTranslation from 'next-translate/useTranslation';
 import React from 'react'
 import i18nConfig from '../../../i18n.json'
 import Link from 'next/link';
+import setLanguage from 'next-translate/setLanguage'
+import useLocalStorage from '../../shared/hooks/useLocalStorage';
 
 function AuthFooter() {
     const {lang,t} = useTranslation("common")
-    const [language, setLanguage] = React.useState(lang);
     const {languages} = i18nConfig
+    const [language, setLocalLanguage] = useLocalStorage("language", lang)
 
     const handleChange = (event) => {
       setLanguage(event.target.value as string);
+      setLocalLanguage(event.target.value as string);
     };
   
   return (
@@ -19,7 +22,7 @@ function AuthFooter() {
             
         <FormControl fullWidth className='text-primary dark:text-dark text-xs language-select '>
           <Select
-            value={language}
+            value={lang}
             onChange={handleChange}
             className='text-xs dark:text-[#ddd]'
             size="small"

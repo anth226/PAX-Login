@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, TextField, Container,styled,Box } from "@mui/material";
+import { Button, Card, TextField, Container,styled,Box, Typography } from "@mui/material";
 import LogoImg from '../../images/logo.svg'
 import Image from 'next/image';
 import CustomButton from '../ui/CustomButton';
@@ -27,10 +27,8 @@ function SignInForm({ register, errors, isLoading}:TAuthProps) {
           <Image alt='Logo' src={LogoImg} className="h-14 w-14 text-center" />
         </div>
         <div className="flex flex-col gap-2 items-center my-4">
-          <div className="text-2xl  text-[#202124] dark:text-[#ddd] ">{t('auth.index.header')}</div>
-          <div className="font-normal  text-[#202124] dark:text-[#ddd] tracking-normal">
-            {t('auth.index.title')}
-          </div>
+          <Typography variant='h5'>{t('auth.index.header')}</Typography>
+          <Typography variant='h6'>{t('auth.index.title')}</Typography>
         </div>
         <div className="my-10 flex flex-col gap-10 w-full">
           <div>

@@ -13,6 +13,7 @@ import{
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
 import { useRouter } from 'next/router';
 import { customShowInputError } from '../../shared/utils/helper';
+import useLocalStorage from '../../shared/hooks/useLocalStorage';
 
 
 type FormData = {
@@ -36,9 +37,15 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
 
 function Forgot() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const { register, handleSubmit, setError, formState: { errors } } = useForm<FormData>();
+    const { register, handleSubmit, setError, setValue, formState: { errors } } = useForm<FormData>();
     const {t} = useTranslation("common")
     const [hasSent, setHasSent] = useState<boolean>(false)
+    const [email, setEmail] = useLocalStorage("email", "")
+
+    React.useEffect(() => {
+      setValue("email", email)
+    }, [email])
+    
 
     const router = useRouter()
 

@@ -26,12 +26,12 @@ function SignInPage() {
     try {
       await verifyEmailApi(data)
       setEmail(data.email)
-      router.replace("/signin/password")
+      router.push("/signin/password")
     } catch (error) {
       customShowInputError('email', error, setError)
       apiErrorToast(error)
+      setIsLoading(false)
     }
-    setIsLoading(false)
   }
 
   return (

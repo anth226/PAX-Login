@@ -12,10 +12,11 @@ import CryptoJS from 'crypto-js'
 
 
 import ResetPasswordForm from '../../components/auth/ResetPasswordForm'
+import { cryptValue } from '../../shared/utils/helper';
 
 
 type FormData = {
-    password?: string,
+    new_password?: string,
     confirm_password: string,
     reset_code: string
 };
@@ -27,19 +28,22 @@ function ResetPassword() {
     const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<FormData>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const[isValidLink, setIsValidLink] = useState<boolean>(false)
-    
-    
 
     const onSubmit = async (data:FormData) => {
+      setIsLoading(true)
       try {
         // encrypt newData
-        data.password = CryptoJS.AES.encrypt(data.password, process.env.NEXT_PUBLIC_ENCRIPTION_KEY ?? "").toString();
-        data.confirm_password = CryptoJS.AES.encrypt(data.confirm_password, process.env.NEXT_PUBLIC_ENCRIPTION_KEY ?? "").toString();
-        await setUpdatePasswordApi(data)
+        const formData = {
+          password: cryptValue(data.new_password),
+          confirm_password: cryptValue(data.confirm_password),
+          reset_code: data.reset_code
+        }
+        await setUpdatePasswordApi(formData)
         successToast(t("auth.resetpwd.success"));
         router.push("/")
       } catch (error) {
         apiErrorToast(error)
+        setIsLoading(false)
       }
      }
 

@@ -4,5 +4,6 @@ export type TAuthProps = {
   errors?: any,
   isLoading: boolean,
   setValue?: Function,
-  getValues?: Function
+  getValues?: Function,
+  twoFaMethods?: any
 }

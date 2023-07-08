@@ -17,6 +17,15 @@ export const verifyEmailApi = async (data) => {
   }
 };
 
+export const verifyTwoStepApi = async (data) => {
+  try {
+    return await axiosInstance.post("/auth/verify/otp", data);
+  } catch (error) {
+    throw error;
+  }
+}
+
+
 export const verifyTwoStepMailApi = async (data) => {
   try {
     return await axiosInstance.post("/auth/verify/mail", data);
@@ -51,12 +60,7 @@ export const getResetLinkApi = async (data) => {
 
 export const setUpdatePasswordApi = async (data) => {
   try {
-    var newData = {
-      confirm_password: data.confirm_password,
-      password: data.password,
-      reset_code: data.reset_code,
-    };
-    return await axiosInstance.put("/auth/password", newData);
+    return await axiosInstance.put("/auth/password", data);
   } catch (error) {
     throw error;
   }
@@ -64,27 +68,35 @@ export const setUpdatePasswordApi = async (data) => {
 
 export const setUpdatePasswordAuthApi = async (data) => {
   try {
-    return await axiosInstance.put("/auth/user/password", data);
+    return await axiosInstance.put("/auth/require/password-reset", data);
   } catch (error) {
     throw error;
   }
 };
 
-export const sendOTPCodePhoneApi = async (data) => {
+export const sendOTPCodeApi = async (data) => {
   try {
-    return await axiosInstance.post("/auth/send/otp/phone", data);
+    return await axiosInstance.post("/auth/send/otp", data);
   } catch (error) {
     throw error;
   }
-};
+}
 
-export const sendOTPCodeMailApi = async (data) => {
-  try {
-    return await axiosInstance.post("/auth/send/otp/mail", data);
-  } catch (error) {
-    throw error;
-  }
-};
+// export const sendOTPCodePhoneApi = async (data) => {
+//   try {
+//     return await axiosInstance.post("/auth/send/otp/phone", data);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+// export const sendOTPCodeMailApi = async (data) => {
+//   try {
+//     return await axiosInstance.post("/auth/send/otp/mail", data);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
 
 export const sendTOSAgreementApi = async (data) => {
   try {

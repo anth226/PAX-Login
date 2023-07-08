@@ -14,6 +14,7 @@ import {
     ListItemIcon,
     ListItemText,
     TextField,
+    Typography,
   } from "@mui/material";
 import LogoImg from '../../images/logo.svg'
 import Image from "next/image";
@@ -27,9 +28,9 @@ function ChooseAccount({emails=[], setValue, isLoading, setShowAddNew}) {
   const submitRef: any = useRef()
 
   return (
-    <div className="flex justify-center items-center p-8 min-h-screen ">
+    <div className="flex justify-center items-center p-8 min-h-screen">
       <Container maxWidth="xs">
-        <Card variant="outlined" className="min-h-[70vh] ">
+        <Card variant="outlined" className="min-h-[70vh]" style={{ filter: isLoading ? 'opacity(70%)' : 'blur(0)' }}>
           {isLoading&& (
            <Box sx={{ width: '100%' }}>
             <LinearProgress/>
@@ -40,7 +41,7 @@ function ChooseAccount({emails=[], setValue, isLoading, setShowAddNew}) {
               <Image alt='Logo' src={LogoImg} className="h-14 w-14 text-center" />
             </div>
             <div className="flex flex-col gap-2 items-center my-4 mb-8">
-              <div className="text-xl text-[#202124] dark:text-[#ddd]">{t('choose_account')}</div>
+              <Typography variant={"h5"}>{t('choose_account')}</Typography>
             </div>
             {emails.map(email=>{
               const firstLetter = email.charAt(0)

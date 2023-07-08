@@ -10,7 +10,6 @@ import {
     TextField,
   } from "@mui/material";
 import LogoImg from '../../images/logo.svg'
-import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import Image from "next/image";
 import ChatIcon from '@mui/icons-material/Chat';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -35,8 +34,7 @@ function ChooseVerifyWay({ isLoading}:TAuthProps) {
           <div className="flex items-center justify-center rounded-full border border-gray-300 p-1 gap-2">
             <Image alt='Logo' src={LogoImg} className="h-6 w-6 rounded-full" />
             <div className="text-sm text-[#202124]">
-              adminuser@gmail.com{" "}
-              <KeyboardArrowDownRoundedIcon className="h-4 w-4" />
+              adminuser@gmail.com
             </div>
           </div>
         </div>

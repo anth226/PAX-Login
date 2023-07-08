@@ -1,9 +1,19 @@
+import * as CryptoJS from 'crypto-js'
+
 export function formatPhoneNumber(phoneNumber: string) {
   if(!phoneNumber) return "";
   const lastTwoDigits = phoneNumber.slice(-2);
   const asterisks = '*'.repeat(phoneNumber.length - 2);
   return `${asterisks}${lastTwoDigits}`;
 }
+
+export function formatEmail(email: string) {
+  if (!email) return "";
+  const [username, domain] = email.split("@");
+  const visibleUsername = username.charAt(0) + "*".repeat(username.length - 2) + username.charAt(username.length - 1);
+  return `${visibleUsername}@${domain}`;
+}
+
 
 export const customShowInputError = (key: any, error: any, setError: Function) => {
     let customMessage = "Some Error Occured."
@@ -32,4 +42,8 @@ export function getRandomColor() {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
+}
+
+export function cryptValue(value: string) {
+  return CryptoJS.AES.encrypt(value, process.env.NEXT_PUBLIC_ENCRIPTION_KEY ?? "").toString();
 }
