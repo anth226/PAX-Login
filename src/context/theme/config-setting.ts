@@ -1,11 +1,11 @@
 // components
 
-import { DefaultThemeValuesProps } from "../../shared/types/context";
+import { SettingsValuesProps } from "../../shared/types/context";
 
 // PLEASE REMOVE `LOCAL STORAGE` WHEN YOU CHANGE SETTINGS.
 // ----------------------------------------------------------------------
 
-export const defaultThemeValues: DefaultThemeValuesProps = {
+export const defaultThemeValues: SettingsValuesProps = {
   themeMode: 'light',
   themeDirection: 'ltr',
   themeContrast: 'default',
